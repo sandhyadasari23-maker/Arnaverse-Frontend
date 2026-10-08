@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Arnaverse</title>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        .checkout-page {
+            min-height: 80vh;
+            padding: 70px 20px;
+            background: #fff8fb;
+        }
+
+        .checkout-container {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .checkout-heading {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .checkout-tag {
+            display: inline-block;
+            padding: 8px 18px;
+            background: #f3d5e1;
+            color: #a8325d;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .checkout-heading h1 {
+            margin: 18px 0 10px;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 52px;
+            color: #2d1d25;
+        }
+
+        .checkout-heading h1 span {
+            color: #a8325d;
+        }
+
+        .checkout-heading p {
+            color: #806d73;
+            font-size: 17px;
+            margin: 0;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 0.9fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .checkout-card {
+            background: #ffffff;
+            border: 1px solid #f0dfe6;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(80, 35, 55, 0.08);
+        }
+
+        .checkout-card + .checkout-card {
+            margin-top: 25px;
+        }
+
+        .checkout-card h2 {
+            margin: 0 0 25px;
+            color: #2d1d25;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #2d1d25;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px 15px;
+            border: 1px solid #ddd0d6;
+            border-radius: 10px;
+            background: #fff;
+            color: #2d1d25;
+            font-family: "DM Sans", sans-serif;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #a8325d;
+            box-shadow: 0 0 0 3px rgba(168, 50, 93, 0.08);
+        }
+
+        .form-group textarea {
+            min-height: 105px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 16px;
+            border: 1px solid #eadfe2;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .payment-option:hover {
+            border-color: #a8325d;
+            background: #fff8fb;
+        }
+
+        .payment-option input {
+            accent-color: #a8325d;
+            transform: scale(1.15);
+        }
+
+        .payment-option strong {
+            color: #2d1d25;
+        }
+
+        .payment-option span {
+            color: #806d73;
+            font-size: 14px;
+        }
+
+        #upiBox {
+            display: none;
+            margin-top: 18px;
+            padding: 15px;
+            background: #fff8fb;
+            border-radius: 12px;
+        }
+
+        .summary-items {
+            margin-bottom: 20px;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid #eee5e8;
+        }
+
+        .summary-image {
+            width: 65px;
+            height: 65px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fde6ef;
+        }
+
+        .summary-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .summary-info {
+            flex: 1;
+        }
+
+        .summary-item-name {
+            color: #2d1d25;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .summary-item-qty {
+            color: #806d73;
+            font-size: 13px;
+        }
+
+        .summary-item-price {
+            color: #a8325d;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            color: #806d73;
+        }
+
+        .summary-row strong {
+            color: #2d1d25;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 18px;
+            border-top: 1px solid #eadfe2;
+            color: #2d1d25;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .summary-total strong {
+            color: #a8325d;
+        }
+
+        .place-order-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px;
+            background: #b52f62;
+            color: white;
+            font-family: "DM Sans", sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .place-order-btn:hover {
+            background: #96244f;
+            transform: translateY(-1px);
+        }
+
+        #checkoutMessage {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 700;
+            min-height: 20px;
+        }
+
+        .empty-checkout {
+            max-width: 650px;
+            margin: 20px auto 0;
+            background: white;
+            border: 1px solid #f0dfe6;
+            border-radius: 20px;
+            padding: 60px 30px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(80, 35, 55, 0.07);
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .empty-checkout h2 {
+            margin: 0 0 10px;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 30px;
+            color: #2d1d25;
+        }
+
+        .empty-checkout p {
+            margin: 0;
+            color: #806d73;
+            font-size: 16px;
+        }
+
+        .empty-checkout a {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 13px 25px;
+            background: #b52f62;
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .empty-checkout a:hover {
+            background: #96244f;
+        }
+
+        @media (max-width: 850px) {
+
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-heading h1 {
+                font-size: 42px;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .checkout-page {
+                padding: 45px 15px;
+            }
+
+            .checkout-card {
+                padding: 22px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .checkout-heading h1 {
+                font-size: 36px;
+            }
+
+            .checkout-heading p {
+                font-size: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a href="./index.html" class="logo">
+
+            <span class="logo-icon">✿</span>
+
+            <span>
+                Arna<span>verse</span>
+            </span>
+
+        </a>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="./index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="./shop.html">
+                    Shop
+                </a>
+            </li>
+
+            <li>
+                <a href="./customize.html">
+                    Customize
+                </a>
+            </li>
+
+            <li>
+                <a href="./ai-recommendation.html">
+                    AI Picks
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="nav-actions">
+
+            <a href="./cart.html" class="cart-btn">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                <span class="cart-count">
+                    0
+                </span>
+
+            </a>
+
+            <a href="./login.html" class="login-btn">
+                Login
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+
+<main class="checkout-page">
+
+    <div class="checkout-container">
+
+        <div class="checkout-heading">
+
+            <span class="checkout-tag">
+                COMPLETE YOUR ORDER
+            </span>
+
+            <h1>
+                Check<span>out</span>
+            </h1>
+
+            <p>
+                Enter your delivery details and place your order.
+            </p>
+
+        </div>
+
+
+        <div id="checkoutContent">
+
+            <div class="checkout-grid">
+
+                <div>
+
+                    <div class="checkout-card">
+
+                        <h2>
+                            <i class="fa-solid fa-location-dot"></i>
+                            Delivery Details
+                        </h2>
+
+                        <div class="form-group">
+
+                            <label for="fullName">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                placeholder="Enter your full name"
+                            >
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="phone">
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    maxlength="10"
+                                    placeholder="10-digit mobile number"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="pincode">
+                                    Pincode
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="pincode"
+                                    maxlength="6"
+                                    placeholder="6-digit pincode"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="address">
+                                Complete Address
+                            </label>
+
+                            <textarea
+                                id="address"
+                                placeholder="House no., street, area..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="city">
+                                City
+                            </label>
+
+                            <input
+                                type="text"
+                                id="city"
+                                placeholder="Enter your city"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="checkout-card">
+
+                        <h2>
+                            <i class="fa-solid fa-wallet"></i>
+                            Payment Method
+                        </h2>
+
+
+                        <div class="payment-options">
+
+                            <label class="payment-option">
+
+                                <input
+                                    type="radio"
+                                    name="payment"
+                                    value="COD"
+                                    checked
+                                >
+
+                                <div>
+
+                                    <strong>
+                                        Cash on Delivery
+                                    </strong>
+
+                                    <br>
+
+                                    <span>
+                                        Pay when your bouquet is delivered.
+                                    </span>
+
+                                </div>
+
+                            </label>
+
+
+                            <label class="payment-option">
+
+                                <input
+                                    type="radio"
+                                    name="payment"
+                                    value="UPI"
+                                >
+
+                                <div>
+
+                                    <strong>
+                                        UPI Payment
+                                    </strong>
+
+                                    <br>
+
+                                    <span>
+                                        Pay using your UPI ID.
+                                    </span>
+
+                                </div>
+
+                            </label>
+
+                        </div>
+
+
+                        <div id="upiBox">
+
+                            <div class="form-group">
+
+                                <label for="upiId">
+                                    UPI ID
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="upiId"
+                                    placeholder="example@upi"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="checkout-card">
+
+                    <h2>
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Order Summary
+                    </h2>
+
+
+                    <div
+                        class="summary-items"
+                        id="summaryItems"
+                    ></div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong id="subtotal">
+                            ₹0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Delivery
+                        </span>
+
+                        <strong>
+                            ₹50
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong id="total">
+                            ₹50
+                        </strong>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="placeOrderBtn"
+                        class="place-order-btn"
+                    >
+
+                        Place Order
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+
+                    <div id="checkoutMessage"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<footer class="footer">
+
+    <div class="footer-bottom">
+
+        © 2026 Arnaverse | Smart Online Bouquet Ordering
+
+    </div>
+
+</footer>
+
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* =========================================
+           GET CART
+        ========================================= */
+
+        let cart = [];
+
+        try {
+
+            cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "arnaverseCart"
+                    )
+                ) || [];
+
+        } catch (error) {
+
+            cart = [];
+
+        }
+
+
+        /* =========================================
+           EMPTY CART
+        ========================================= */
+
+        if (
+            !Array.isArray(cart) ||
+            cart.length === 0
+        ) {
+
+            document.getElementById(
+                "checkoutContent"
+            ).innerHTML = `
+
+                <div class="empty-checkout">
+
+                    <div class="empty-icon">
+                        🛍️
+                    </div>
+
+                    <h2>
+                        Your Cart is Empty
+                    </h2>
+
+                    <p>
+                        Please add a bouquet before checkout.
+                    </p>
+
+                    <a href="./shop.html">
+                        Browse Bouquets
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+
+        /* =========================================
+           GET CORRECT IMAGE
+        ========================================= */
+
+        function getBouquetImage(item) {
+
+            const name =
+                (item.name || "")
+                .toLowerCase()
+                .trim();
+
+
+            if (
+                name === "mixed red & white bouquet" ||
+                name === "mixed red and white bouquet" ||
+                name.includes("mixed red & white") ||
+                name.includes("mixed red and white")
+            ) {
+
+                return "assets/images/bouquets/mixed-red-white-bouquet.jpeg";
+
+            }
+
+
+            if (
+                name === "purple mixed bouquet" ||
+                name.includes("purple mixed")
+            ) {
+
+                return "assets/images/bouquets/purple-mixed-bouquet.jpeg";
+
+            }
+
+
+            if (
+                name === "red rose bouquet" ||
+                name.includes("red rose")
+            ) {
+
+                return "assets/images/bouquets/red-rose-bouquet.jpeg";
+
+            }
+
+
+            if (
+                name === "purple lily bouquet" ||
+                name.includes("purple lily")
+            ) {
+
+                return "assets/images/bouquets/purple-lily-bouquet.jpeg";
+
+            }
+
+
+            if (
+                name.includes("wedding")
+            ) {
+
+                return "assets/images/bouquets/wedding-bouquet.jpeg";
+
+            }
+
+
+            if (
+                name.includes("pink tulip")
+            ) {
+
+                return "assets/images/bouquets/pink-tulip-bouquet.jpeg";
+
+            }
+
+
+            if (
+                name.includes("twin rose")
+            ) {
+
+                return "assets/images/bouquets/red-twin-rose-bouquet.jpeg";
+
+            }
+
+
+            if (
+                item.image &&
+                item.image.trim() !== ""
+            ) {
+
+                return item.image;
+
+            }
+
+
+            if (
+                item.img &&
+                item.img.trim() !== ""
+            ) {
+
+                return item.img;
+
+            }
+
+
+            if (
+                item.imageUrl &&
+                item.imageUrl.trim() !== ""
+            ) {
+
+                return item.imageUrl;
+
+            }
+
+
+            return "assets/images/bouquets/hero-bouquet.jpeg";
+
+        }
+
+
+
+        /* =========================================
+           CALCULATE TOTAL
+        ========================================= */
+
+        let subtotal = 0;
+
+
+        cart.forEach(function (item) {
+
+            const price =
+                Number(item.price) || 0;
+
+            const quantity =
+                Number(item.quantity) || 1;
+
+            subtotal +=
+                price * quantity;
+
+        });
+
+
+        const delivery = 50;
+
+        const total =
+            subtotal + delivery;
+
+
+
+        /* =========================================
+           DISPLAY SUMMARY
+        ========================================= */
+
+        const summaryItems =
+            document.getElementById(
+                "summaryItems"
+            );
+
+
+        summaryItems.innerHTML = "";
+
+
+        cart.forEach(function (item) {
+
+            const price =
+                Number(item.price) || 0;
+
+            const quantity =
+                Number(item.quantity) || 1;
+
+            const itemTotal =
+                price * quantity;
+
+
+            const itemDiv =
+                document.createElement(
+                    "div"
+                );
+
+
+            itemDiv.className =
+                "summary-item";
+
+
+            const image =
+                getBouquetImage(item);
+
+
+            itemDiv.innerHTML = `
+
+                <div class="summary-image">
+
+                    <img
+                        src="${image}"
+                        alt="${item.name || "Bouquet"}"
+                        onerror="
+                            this.onerror=null;
+                            this.src='assets/images/bouquets/hero-bouquet.jpeg';
+                        "
+                    >
+
+                </div>
+
+
+                <div class="summary-info">
+
+                    <div class="summary-item-name">
+                        ${item.name || "Bouquet"}
+                    </div>
+
+                    <div class="summary-item-qty">
+                        Quantity: ${quantity}
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item-price">
+                    ₹${itemTotal}
+                </div>
+
+            `;
+
+
+            summaryItems.appendChild(
+                itemDiv
+            );
+
+        });
+
+
+
+        document.getElementById(
+            "subtotal"
+        ).textContent =
+            "₹" + subtotal;
+
+
+        document.getElementById(
+            "total"
+        ).textContent =
+            "₹" + total;
+
+
+
+        /* =========================================
+           PAYMENT SWITCH
+        ========================================= */
+
+        const paymentOptions =
+            document.querySelectorAll(
+                'input[name="payment"]'
+            );
+
+
+        const upiBox =
+            document.getElementById(
+                "upiBox"
+            );
+
+
+        paymentOptions.forEach(
+            function (radio) {
+
+                radio.addEventListener(
+                    "change",
+                    function () {
+
+                        if (
+                            this.value === "UPI"
+                        ) {
+
+                            upiBox.style.display =
+                                "block";
+
+                        } else {
+
+                            upiBox.style.display =
+                                "none";
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* =========================================
+           PLACE ORDER
+        ========================================= */
+
+        document.getElementById(
+            "placeOrderBtn"
+        ).addEventListener(
+            "click",
+            function () {
+
+
+                const fullName =
+                    document.getElementById(
+                        "fullName"
+                    ).value.trim();
+
+
+                const phone =
+                    document.getElementById(
+                        "phone"
+                    ).value.trim();
+
+
+                const address =
+                    document.getElementById(
+                        "address"
+                    ).value.trim();
+
+
+                const city =
+                    document.getElementById(
+                        "city"
+                    ).value.trim();
+
+
+                const pincode =
+                    document.getElementById(
+                        "pincode"
+                    ).value.trim();
+
+
+                const payment =
+                    document.querySelector(
+                        'input[name="payment"]:checked'
+                    ).value;
+
+
+                const upiId =
+                    document.getElementById(
+                        "upiId"
+                    ).value.trim();
+
+
+                const message =
+                    document.getElementById(
+                        "checkoutMessage"
+                    );
+
+
+
+                /* =====================================
+                   VALIDATION
+                ===================================== */
+
+                if (
+                    !fullName ||
+                    !phone ||
+                    !address ||
+                    !city ||
+                    !pincode
+                ) {
+
+                    message.textContent =
+                        "❌ Please fill all delivery details.";
+
+                    message.style.color =
+                        "#d9534f";
+
+                    return;
+
+                }
+
+
+                if (
+                    !/^[0-9]{10}$/.test(phone)
+                ) {
+
+                    message.textContent =
+                        "❌ Enter a valid 10-digit phone number.";
+
+                    message.style.color =
+                        "#d9534f";
+
+                    return;
+
+                }
+
+
+                if (
+                    !/^[0-9]{6}$/.test(pincode)
+                ) {
+
+                    message.textContent =
+                        "❌ Enter a valid 6-digit pincode.";
+
+                    message.style.color =
+                        "#d9534f";
+
+                    return;
+
+                }
+
+
+                if (
+                    payment === "UPI" &&
+                    !upiId
+                ) {
+
+                    message.textContent =
+                        "❌ Please enter your UPI ID.";
+
+                    message.style.color =
+                        "#d9534f";
+
+                    return;
+
+                }
+
+
+
+                /* =====================================
+                   CHECK BOUQUET STOCK
+                ===================================== */
+
+                let storedBouquets = [];
+
+                try {
+
+                    storedBouquets =
+                        JSON.parse(
+                            localStorage.getItem(
+                                "arnaverseBouquets"
+                            )
+                        ) || [];
+
+                } catch (error) {
+
+                    storedBouquets = [];
+
+                }
+
+
+                if (!Array.isArray(storedBouquets)) {
+
+                    storedBouquets = [];
+
+                }
+
+
+                let stockError = false;
+
+
+                cart.forEach(function (cartItem) {
+
+                    const cartName =
+                        (cartItem.name || "")
+                        .trim()
+                        .toLowerCase();
+
+
+                    const cartQuantity =
+                        Number(
+                            cartItem.quantity || 1
+                        );
+
+
+                    const matchingBouquet =
+                        storedBouquets.find(
+                            function (bouquet) {
+
+                                const bouquetName =
+                                    (bouquet.name || "")
+                                    .trim()
+                                    .toLowerCase();
+
+                                return (
+                                    bouquetName === cartName
+                                );
+
+                            }
+                        );
+
+
+                    if (matchingBouquet) {
+
+                        const availableStock =
+                            Number(
+                                matchingBouquet.stock || 0
+                            );
+
+
+                        if (
+                            availableStock <
+                            cartQuantity
+                        ) {
+
+                            stockError = true;
+
+                            message.textContent =
+                                "❌ " +
+                                cartItem.name +
+                                " has only " +
+                                availableStock +
+                                " item(s) available.";
+
+                            message.style.color =
+                                "#d9534f";
+
+                        }
+
+                    }
+
+                });
+
+
+                if (stockError) {
+
+                    return;
+
+                }
+
+
+
+                /* =====================================
+                   CREATE EXACT DATE
+                ===================================== */
+
+                const now =
+                    new Date();
+
+
+                const orderDate =
+                    now.toLocaleString(
+                        "en-IN",
+                        {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        }
+                    );
+
+
+                const createdAt =
+                    now.toISOString();
+
+
+
+                /* =====================================
+                   SAVE ORDER ITEMS WITH IMAGE
+                ===================================== */
+
+                const orderItems =
+                    cart.map(function (item) {
+
+                        return {
+
+                            id:
+                                item.id || "",
+
+                            name:
+                                item.name ||
+                                "Bouquet",
+
+                            price:
+                                Number(
+                                    item.price
+                                ) || 0,
+
+                            quantity:
+                                Number(
+                                    item.quantity
+                                ) || 1,
+
+                            image:
+                                getBouquetImage(
+                                    item
+                                ),
+
+                            category:
+                                item.category ||
+                                ""
+
+                        };
+
+                    });
+
+
+
+                /* =====================================
+                   CREATE ORDER
+                ===================================== */
+
+                const order = {
+
+                    orderId:
+                        "ARN" +
+                        Date.now(),
+
+                    name:
+                        fullName,
+
+                    phone:
+                        phone,
+
+                    address:
+                        address,
+
+                    city:
+                        city,
+
+                    pincode:
+                        pincode,
+
+                    paymentMethod:
+                        payment,
+
+                    upiId:
+                        payment === "UPI"
+                        ? upiId
+                        : "",
+
+                    items:
+                        orderItems,
+
+                    subtotal:
+                        subtotal,
+
+                    delivery:
+                        delivery,
+
+                    total:
+                        total,
+
+                    status:
+                        "Order Placed",
+
+                    orderDate:
+                        orderDate,
+
+                    createdAt:
+                        createdAt
+
+                };
+
+
+
+                /* =====================================
+                   UPDATE BOUQUET STOCK
+                ===================================== */
+
+                orderItems.forEach(
+                    function (orderedItem) {
+
+                        const orderedName =
+                            (orderedItem.name || "")
+                            .trim()
+                            .toLowerCase();
+
+
+                        const orderedQuantity =
+                            Number(
+                                orderedItem.quantity || 1
+                            );
+
+
+                        storedBouquets =
+                            storedBouquets.map(
+                                function (bouquet) {
+
+                                    const bouquetName =
+                                        (bouquet.name || "")
+                                        .trim()
+                                        .toLowerCase();
+
+
+                                    if (
+                                        bouquetName ===
+                                        orderedName
+                                    ) {
+
+                                        const currentStock =
+                                            Number(
+                                                bouquet.stock || 0
+                                            );
+
+
+                                        return {
+
+                                            ...bouquet,
+
+                                            stock:
+                                                Math.max(
+                                                    0,
+                                                    currentStock -
+                                                    orderedQuantity
+                                                )
+
+                                        };
+
+                                    }
+
+
+                                    return bouquet;
+
+                                }
+                            );
+
+                    }
+                );
+
+
+                localStorage.setItem(
+                    "arnaverseBouquets",
+                    JSON.stringify(
+                        storedBouquets
+                    )
+                );
+
+
+
+                /* =====================================
+                   SAVE LATEST ORDER
+                ===================================== */
+
+                localStorage.setItem(
+                    "arnaverseOrder",
+                    JSON.stringify(
+                        order
+                    )
+                );
+
+
+
+                /* =====================================
+                   SAVE ALL ORDERS
+                ===================================== */
+
+                let allOrders = [];
+
+
+                try {
+
+                    allOrders =
+                        JSON.parse(
+                            localStorage.getItem(
+                                "arnaverseOrders"
+                            )
+                        ) || [];
+
+                } catch (error) {
+
+                    allOrders = [];
+
+                }
+
+
+                if (
+                    !Array.isArray(
+                        allOrders
+                    )
+                ) {
+
+                    allOrders = [];
+
+                }
+
+
+                allOrders.push(
+                    order
+                );
+
+
+                localStorage.setItem(
+                    "arnaverseOrders",
+                    JSON.stringify(
+                        allOrders
+                    )
+                );
+
+
+
+                /* =====================================
+                   CLEAR CART
+                ===================================== */
+
+                localStorage.removeItem(
+                    "arnaverseCart"
+                );
+
+
+
+                /* =====================================
+                   SUCCESS MESSAGE
+                ===================================== */
+
+                message.textContent =
+                    "✅ Order placed successfully!";
+
+                message.style.color =
+                    "#2e8b57";
+
+
+
+                /* =====================================
+                   REDIRECT
+                ===================================== */
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "./order-confirmation.html";
+
+                    },
+                    700
+                );
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>

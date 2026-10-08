@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Arnaverse | Create Account</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: #fff8fb;
+      color: #293246;
+      min-height: 100vh;
+    }
+
+    .register-section {
+      min-height: calc(100vh - 75px);
+      padding: 45px 20px 55px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .decor {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.45;
+    }
+
+    .decor.one {
+      width: 260px;
+      height: 260px;
+      background: #f9dce8;
+      left: -100px;
+      top: 100px;
+    }
+
+    .decor.two {
+      width: 220px;
+      height: 220px;
+      background: #fce8ef;
+      right: -90px;
+      bottom: 100px;
+    }
+
+    .decor.three {
+      width: 100px;
+      height: 100px;
+      border: 2px solid #efb7cc;
+      left: 10%;
+      bottom: 60px;
+      background: transparent;
+    }
+
+    .register-card {
+      width: 620px;
+      max-width: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid #f4e4eb;
+      border-radius: 22px;
+      padding: 38px 50px 42px;
+      box-shadow: 0 20px 60px rgba(151, 57, 96, 0.12);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ================= HEADER ================= */
+
+    .card-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .flower-icon {
+      font-size: 42px;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .card-brand {
+      font-family: "Playfair Display", serif;
+      color: #a91f58;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+
+    .card-tagline {
+      color: #697184;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .card-title {
+      font-family: "Playfair Display", serif;
+      font-size: 40px;
+      color: #a91f58;
+      margin-top: 25px;
+    }
+
+    .card-subtitle {
+      color: #697184;
+      font-size: 16px;
+      margin-top: 6px;
+    }
+
+    /* ================= FORM ================= */
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      color: #30394c;
+      margin-bottom: 7px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper > i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #788296;
+      font-size: 17px;
+      z-index: 2;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      height: 57px;
+      border: 1.5px solid #dce0e8;
+      border-radius: 12px;
+      padding: 0 48px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 16px;
+      color: #293246;
+      background: #fff;
+      outline: none;
+      transition: 0.25s;
+    }
+
+    .input-wrapper input::placeholder {
+      color: #9aa2b1;
+    }
+
+    .input-wrapper input:focus {
+      border-color: #bd2763;
+      box-shadow: 0 0 0 4px rgba(189, 39, 99, 0.08);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 17px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: #788296;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    /* ================= BUTTON ================= */
+
+    .register-btn {
+      width: 100%;
+      height: 59px;
+      margin-top: 7px;
+      border: none;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #bd2763, #a91f58);
+      color: white;
+      font-family: "DM Sans", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 8px 22px rgba(169, 31, 88, 0.20);
+    }
+
+    .register-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 27px rgba(169, 31, 88, 0.28);
+    }
+
+    .register-btn i {
+      margin-left: 10px;
+    }
+
+    /* ================= LOGIN ================= */
+
+    .login-text {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 15px;
+      color: #687184;
+    }
+
+    .login-text a {
+      color: #ad205b;
+      font-weight: 700;
+      text-decoration: underline;
+      margin-left: 4px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+      text-align: center;
+      padding: 22px 20px;
+      background: #fff1f6;
+      color: #697184;
+      font-size: 14px;
+    }
+
+    /* ================= MESSAGE ================= */
+
+    .message {
+      display: none;
+      padding: 12px 15px;
+      border-radius: 9px;
+      margin-bottom: 18px;
+      font-size: 14px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .message.success {
+      display: block;
+      background: #eaf8ef;
+      color: #217542;
+      border: 1px solid #bce4c9;
+    }
+
+    .message.error {
+      display: block;
+      background: #fff0f2;
+      color: #b32645;
+      border: 1px solid #f0bcc7;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 768px) {
+
+      .register-section {
+        padding: 35px 15px 45px;
+      }
+
+      .register-card {
+        padding: 32px 23px 35px;
+        border-radius: 18px;
+      }
+
+      .card-brand {
+        font-size: 31px;
+      }
+
+      .card-title {
+        font-size: 34px;
+      }
+    }
+
+    @media (max-width: 450px) {
+
+      .register-card {
+        padding: 28px 18px 32px;
+      }
+
+      .card-title {
+        font-size: 30px;
+      }
+
+      .card-subtitle {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= REGISTER ================= -->
+
+  <main class="register-section">
+
+    <div class="decor one"></div>
+    <div class="decor two"></div>
+    <div class="decor three"></div>
+
+    <div class="register-card">
+
+      <div class="card-header">
+
+        <!-- SIMPLE FLOWER -->
+        <div class="flower-icon">🌸</div>
+
+        <!-- BRAND -->
+        <div class="card-brand">
+          ARNAVERSE
+        </div>
+
+        <div class="card-tagline">
+          Smart Online Bouquet Ordering
+        </div>
+
+        <h2 class="card-title">
+          Create Account
+        </h2>
+
+        <p class="card-subtitle">
+          Register with Arnaverse
+        </p>
+
+      </div>
+
+      <div id="message" class="message"></div>
+
+      <!-- ================= FORM ================= -->
+
+      <form id="registerForm">
+
+        <div class="form-group">
+
+          <label for="name">
+            Full Name
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="fa-regular fa-user"></i>
+
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your full name"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="email">
+            Email
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="fa-regular fa-envelope"></i>
+
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email address"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="fa-solid fa-lock"></i>
+
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              required
+            >
+
+            <button
+              type="button"
+              class="password-toggle"
+              onclick="togglePassword('password', this)"
+            >
+              <i class="fa-regular fa-eye"></i>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="confirmPassword">
+            Confirm Password
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="fa-solid fa-lock"></i>
+
+            <input
+              type="password"
+              id="confirmPassword"
+              placeholder="Confirm your password"
+              required
+            >
+
+            <button
+              type="button"
+              class="password-toggle"
+              onclick="togglePassword('confirmPassword', this)"
+            >
+              <i class="fa-regular fa-eye"></i>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="register-btn"
+        >
+          Register
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+      </form>
+
+
+      <div class="login-text">
+
+        Already have an account?
+
+        <a href="login.html">
+          Login here
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="footer">
+    © 2026 Arnaverse | Smart Online Bouquet Ordering
+  </footer>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    function togglePassword(inputId, button) {
+
+      const input = document.getElementById(inputId);
+      const icon = button.querySelector("i");
+
+      if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+
+      } else {
+
+        input.type = "password";
+
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+
+      }
+
+    }
+
+
+    function showMessage(text, type) {
+
+      const message = document.getElementById("message");
+
+      message.textContent = text;
+
+      message.className = "message " + type;
+
+    }
+
+
+    document
+      .getElementById("registerForm")
+      .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const name =
+          document.getElementById("name").value.trim();
+
+        const email =
+          document.getElementById("email").value.trim().toLowerCase();
+
+        const password =
+          document.getElementById("password").value;
+
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+
+
+        if (!name || !email || !password || !confirmPassword) {
+
+          showMessage(
+            "Please fill all the fields.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (password !== confirmPassword) {
+
+          showMessage(
+            "Passwords do not match.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (password.length < 6) {
+
+          showMessage(
+            "Password must be at least 6 characters.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        const existingUser =
+          JSON.parse(
+            localStorage.getItem("arnaverseUser")
+          );
+
+
+        if (
+          existingUser &&
+          existingUser.email &&
+          existingUser.email.toLowerCase() === email
+        ) {
+
+          showMessage(
+            "This email is already registered. Please login.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        const user = {
+
+          name: name,
+          email: email,
+          password: password
+
+        };
+
+
+        localStorage.setItem(
+          "arnaverseUser",
+          JSON.stringify(user)
+        );
+
+
+        localStorage.setItem(
+          "arnaverseCurrentUser",
+          JSON.stringify(user)
+        );
+
+
+        showMessage(
+          "Registration successful! Redirecting to login...",
+          "success"
+        );
+
+
+        setTimeout(function() {
+
+          window.location.href = "login.html";
+
+        }, 1000);
+
+      });
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customize Bouquet - Arnaverse</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "DM Sans", sans-serif;
+            background: #fff9f5;
+            color: #4b2734;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .custom-header {
+            background: #ffffff;
+            border-bottom: 1px solid #f1dfe5;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .custom-navbar {
+            max-width: 1200px;
+            margin: auto;
+            min-height: 75px;
+            padding: 0 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+        }
+
+        .custom-logo {
+            text-decoration: none;
+            color: #4b2734;
+
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 28px;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .custom-logo span {
+            color: #a8325d;
+        }
+
+
+        .custom-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .custom-nav-links a {
+            text-decoration: none;
+            color: #4b2734;
+
+            font-size: 15px;
+            font-weight: 500;
+
+            transition: 0.3s;
+        }
+
+        .custom-nav-links a:hover,
+        .custom-nav-links a.active {
+            color: #a8325d;
+        }
+
+
+        .custom-nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+
+        .custom-cart {
+            text-decoration: none;
+            color: #4b2734;
+
+            font-size: 20px;
+
+            position: relative;
+        }
+
+        .custom-cart-count {
+            position: absolute;
+
+            top: -9px;
+            right: -10px;
+
+            background: #a8325d;
+            color: #ffffff;
+
+            width: 19px;
+            height: 19px;
+
+            border-radius: 50%;
+
+            font-size: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .custom-login {
+            text-decoration: none;
+
+            background: #a8325d;
+            color: #ffffff;
+
+            padding: 9px 19px;
+            border-radius: 22px;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .custom-login:hover {
+            background: #8f284d;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .customize-section {
+            min-height: calc(100vh - 150px);
+            padding: 70px 20px;
+        }
+
+        .customize-container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+
+        .customize-heading {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .customize-heading h1 {
+            font-family: "Playfair Display", Georgia, serif;
+
+            font-size: 44px;
+
+            margin: 0 0 12px;
+
+            color: #4b2734;
+        }
+
+        .customize-heading p {
+            margin: 0;
+
+            color: #777777;
+
+            font-size: 17px;
+        }
+
+
+        /* =========================
+           MAIN CUSTOMIZATION CARD
+        ========================= */
+
+        .customize-card {
+            background: #ffffff;
+
+            border-radius: 20px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 10px 35px rgba(75, 39, 52, 0.10);
+
+            border: 1px solid #f1dfe5;
+        }
+
+
+        .customize-layout {
+            display: grid;
+
+            grid-template-columns: 40% 60%;
+
+            gap: 35px;
+
+            align-items: start;
+        }
+
+
+        /* =========================
+           BOUQUET PREVIEW
+        ========================= */
+
+        .bouquet-preview {
+            background: #fff4f7;
+
+            border: 1px solid #f1dfe5;
+
+            border-radius: 18px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            position: sticky;
+
+            top: 100px;
+        }
+
+        .bouquet-preview h2 {
+            margin: 0 0 18px;
+
+            font-size: 20px;
+
+            color: #4b2734;
+        }
+
+
+        .preview-image {
+            width: 100%;
+
+            height: 330px;
+
+            object-fit: cover;
+
+            border-radius: 14px;
+
+            display: block;
+        }
+
+
+        .preview-placeholder {
+            width: 100%;
+
+            height: 330px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #ffffff;
+
+            border-radius: 14px;
+
+            font-size: 70px;
+        }
+
+
+        .preview-name {
+            margin-top: 15px;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            color: #a8325d;
+        }
+
+
+        /* =========================
+           CUSTOMIZATION OPTIONS
+        ========================= */
+
+        .customize-group {
+            margin-bottom: 35px;
+        }
+
+        .customize-group:last-of-type {
+            margin-bottom: 20px;
+        }
+
+
+        .customize-group h2 {
+            font-size: 19px;
+
+            margin: 0 0 18px;
+
+            color: #4b2734;
+
+            font-weight: 700;
+        }
+
+
+        .options {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+        }
+
+
+        .option-label {
+            cursor: pointer;
+        }
+
+
+        .option-label input {
+            display: none;
+        }
+
+
+        .option-box {
+            display: block;
+
+            min-width: 125px;
+
+            padding: 13px 18px;
+
+            text-align: center;
+
+            border: 1.5px solid #ead4dc;
+
+            border-radius: 12px;
+
+            color: #5c4650;
+
+            background: #fffdfd;
+
+            transition: 0.25s ease;
+
+            font-size: 15px;
+
+            font-weight: 500;
+        }
+
+
+        .option-box:hover {
+            border-color: #a8325d;
+
+            color: #a8325d;
+        }
+
+
+        .option-label input:checked + .option-box {
+            background: #a8325d;
+
+            color: #ffffff;
+
+            border-color: #a8325d;
+        }
+
+
+        /* =========================
+           PRICE
+        ========================= */
+
+        .price-box {
+            margin-top: 30px;
+
+            padding: 22px;
+
+            background: #fff4f7;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            border: 1px solid #f2dce4;
+        }
+
+
+        .price-label {
+            font-size: 18px;
+
+            font-weight: 600;
+        }
+
+
+        .price-value {
+            font-size: 28px;
+
+            font-weight: 700;
+
+            color: #a8325d;
+        }
+
+
+        /* =========================
+           ADD TO CART
+        ========================= */
+
+        .add-cart-btn {
+            width: 100%;
+
+            margin-top: 25px;
+
+            border: none;
+
+            padding: 16px 25px;
+
+            border-radius: 30px;
+
+            background: #a8325d;
+
+            color: #ffffff;
+
+            font-family: "DM Sans", sans-serif;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.3s ease;
+        }
+
+
+        .add-cart-btn:hover {
+            background: #8f284d;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .custom-footer {
+            text-align: center;
+
+            padding: 24px 20px;
+
+            background: #4b2734;
+
+            color: #ffffff;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .custom-navbar {
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+                padding: 15px 20px;
+            }
+
+
+            .custom-nav-links {
+                order: 3;
+
+                width: 100%;
+
+                justify-content: center;
+
+                flex-wrap: wrap;
+
+                gap: 18px;
+            }
+
+
+            .customize-heading h1 {
+                font-size: 36px;
+            }
+
+
+            .customize-layout {
+                grid-template-columns: 1fr;
+            }
+
+
+            .bouquet-preview {
+                position: static;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .customize-section {
+                padding: 45px 15px;
+            }
+
+
+            .customize-card {
+                padding: 25px 20px;
+            }
+
+
+            .customize-heading h1 {
+                font-size: 31px;
+            }
+
+
+            .customize-heading p {
+                font-size: 15px;
+            }
+
+
+            .options {
+                display: grid;
+
+                grid-template-columns: 1fr 1fr;
+            }
+
+
+            .option-box {
+                min-width: 0;
+
+                width: 100%;
+            }
+
+
+            .price-box {
+                padding: 18px;
+            }
+
+
+            .price-value {
+                font-size: 24px;
+            }
+
+
+            .preview-image,
+            .preview-placeholder {
+                height: 250px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="custom-header">
+
+        <nav class="custom-navbar">
+
+
+            <a
+                href="./index.html"
+                class="custom-logo"
+            >
+                Arna<span>verse</span>
+            </a>
+
+
+            <ul class="custom-nav-links">
+
+                <li>
+                    <a href="./index.html">
+                        Home
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="./shop.html">
+                        Shop
+                    </a>
+                </li>
+
+
+                <li>
+                    <a
+                        href="./index.html#how-it-works"
+                    >
+                        How It Works
+                    </a>
+                </li>
+
+
+                <li>
+                    <a
+                        href="./index.html#about"
+                    >
+                        About
+                    </a>
+                </li>
+
+
+                <li>
+                    <a
+                        href="./ai-recommendation.html"
+                    >
+                        AI Picks
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <div class="custom-nav-actions">
+
+
+                <a
+                    href="./cart.html"
+                    class="custom-cart"
+                >
+
+                    🛒
+
+                    <span
+                        class="custom-cart-count"
+                        id="cartCount"
+                    >
+                        0
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="./login.html"
+                    class="custom-login"
+                >
+                    Login
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================
+         MAIN CUSTOMIZATION
+    ========================= -->
+
+    <main class="customize-section">
+
+
+        <div class="customize-container">
+
+
+            <!-- HEADING -->
+
+            <div class="customize-heading">
+
+                <h1>
+                    CUSTOMIZE YOUR BOUQUET
+                </h1>
+
+                <p>
+                    Create a bouquet made just for you.
+                </p>
+
+            </div>
+
+
+
+            <!-- CARD -->
+
+            <div class="customize-card">
+
+
+                <div class="customize-layout">
+
+
+                    <!-- =========================
+                         LEFT SIDE PREVIEW
+                    ========================= -->
+
+                    <div class="bouquet-preview">
+
+
+                        <h2>
+                            Bouquet Preview
+                        </h2>
+
+
+                        <div id="previewContainer">
+
+                            <div class="preview-placeholder">
+                                💐
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="preview-name"
+                            id="previewName"
+                        >
+                            Your Custom Bouquet
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         RIGHT SIDE OPTIONS
+                    ========================= -->
+
+                    <div>
+
+
+                        <!-- =========================
+                             FLOWERS
+                        ========================= -->
+
+                        <div class="customize-group">
+
+                            <h2>
+                                CHOOSE FLOWERS
+                            </h2>
+
+
+                            <div class="options">
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="flower"
+                                        value="Roses"
+                                        data-price="450"
+                                        checked
+                                    >
+
+                                    <span class="option-box">
+                                        🌹 Roses
+                                    </span>
+
+                                </label>
+
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="flower"
+                                        value="Tulips"
+                                        data-price="500"
+                                    >
+
+                                    <span class="option-box">
+                                        🌷 Tulips
+                                    </span>
+
+                                </label>
+
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="flower"
+                                        value="Lilies"
+                                        data-price="550"
+                                    >
+
+                                    <span class="option-box">
+                                        🌸 Lilies
+                                    </span>
+
+                                </label>
+
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="flower"
+                                        value="Mixed Flowers"
+                                        data-price="600"
+                                    >
+
+                                    <span class="option-box">
+                                        💐 Mixed Flowers
+                                    </span>
+
+                                </label>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =========================
+                             SIZE
+                        ========================= -->
+
+                        <div class="customize-group">
+
+                            <h2>
+                                BOUQUET SIZE
+                            </h2>
+
+
+                            <div class="options">
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="size"
+                                        value="Small"
+                                        data-price="0"
+                                        checked
+                                    >
+
+                                    <span class="option-box">
+                                        Small
+                                    </span>
+
+                                </label>
+
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="size"
+                                        value="Medium"
+                                        data-price="50"
+                                    >
+
+                                    <span class="option-box">
+                                        Medium +₹50
+                                    </span>
+
+                                </label>
+
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="size"
+                                        value="Large"
+                                        data-price="100"
+                                    >
+
+                                    <span class="option-box">
+                                        Large +₹100
+                                    </span>
+
+                                </label>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =========================
+                             RIBBON
+                        ========================= -->
+
+                        <div class="customize-group">
+
+                            <h2>
+                                RIBBON
+                            </h2>
+
+
+                            <div class="options">
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="ribbon"
+                                        value="Pink"
+                                        data-price="0"
+                                        checked
+                                    >
+
+                                    <span class="option-box">
+                                        🎀 Pink
+                                    </span>
+
+                                </label>
+
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="ribbon"
+                                        value="Red"
+                                        data-price="25"
+                                    >
+
+                                    <span class="option-box">
+                                        🎀 Red +₹25
+                                    </span>
+
+                                </label>
+
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="ribbon"
+                                        value="Purple"
+                                        data-price="25"
+                                    >
+
+                                    <span class="option-box">
+                                        🎀 Purple +₹25
+                                    </span>
+
+                                </label>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =========================
+                             ADD CARD
+                        ========================= -->
+
+                        <div class="customize-group">
+
+                            <h2>
+                                ADD CARD
+                            </h2>
+
+
+                            <div class="options">
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="card"
+                                        value="Yes"
+                                        data-price="50"
+                                    >
+
+                                    <span class="option-box">
+                                        💌 Yes +₹50
+                                    </span>
+
+                                </label>
+
+
+
+                                <label class="option-label">
+
+                                    <input
+                                        type="radio"
+                                        name="card"
+                                        value="No"
+                                        data-price="0"
+                                        checked
+                                    >
+
+                                    <span class="option-box">
+                                        No
+                                    </span>
+
+                                </label>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =========================
+                             PRICE
+                        ========================= -->
+
+                        <div class="price-box">
+
+                            <span class="price-label">
+                                PRICE:
+                            </span>
+
+
+                            <span
+                                class="price-value"
+                                id="totalPrice"
+                            >
+                                ₹450
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- =========================
+                             ADD TO CART
+                        ========================= -->
+
+                        <button
+                            type="button"
+                            class="add-cart-btn"
+                            id="addToCartBtn"
+                        >
+                            🛒 ADD TO CART
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer class="custom-footer">
+
+        © 2026 Arnaverse
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+
+        /* =========================
+           BOUQUET IMAGES
+        ========================= */
+
+        const bouquetImages = {
+
+
+            "Roses":
+            "./assets/images/bouquets/red-rose-bouquet.jpeg",
+
+
+            "Tulips":
+            "./assets/images/bouquets/pink-tulip-bouquet.jpeg",
+
+
+            "Lilies":
+            "./assets/images/bouquets/purple-lily-bouquet.jpeg",
+
+
+            "Mixed Flowers":        
+            "./assets/images/bouquets/purple-mixed-bouquet.jpeg"
+
+
+        };
+
+
+
+        /* =========================
+           ELEMENTS
+        ========================= */
+
+        const allOptions =
+            document.querySelectorAll(
+                '.option-label input'
+            );
+
+
+        const totalPriceElement =
+            document.getElementById(
+                'totalPrice'
+            );
+
+
+        const addToCartButton =
+            document.getElementById(
+                'addToCartBtn'
+            );
+
+
+        const cartCountElement =
+            document.getElementById(
+                'cartCount'
+            );
+
+
+        const previewContainer =
+            document.getElementById(
+                'previewContainer'
+            );
+
+
+        const previewName =
+            document.getElementById(
+                'previewName'
+            );
+
+
+
+        /* =========================
+           CALCULATE PRICE
+        ========================= */
+
+        function calculatePrice() {
+
+
+            const flower =
+                document.querySelector(
+                    'input[name="flower"]:checked'
+                );
+
+
+            const size =
+                document.querySelector(
+                    'input[name="size"]:checked'
+                );
+
+
+            const ribbon =
+                document.querySelector(
+                    'input[name="ribbon"]:checked'
+                );
+
+
+            const card =
+                document.querySelector(
+                    'input[name="card"]:checked'
+                );
+
+
+            const flowerPrice =
+                Number(
+                    flower?.dataset.price || 0
+                );
+
+
+            const sizePrice =
+                Number(
+                    size?.dataset.price || 0
+                );
+
+
+            const ribbonPrice =
+                Number(
+                    ribbon?.dataset.price || 0
+                );
+
+
+            const cardPrice =
+                Number(
+                    card?.dataset.price || 0
+                );
+
+
+            const total =
+                flowerPrice +
+                sizePrice +
+                ribbonPrice +
+                cardPrice;
+
+
+            totalPriceElement.textContent =
+                `₹${total}`;
+
+
+            return total;
+
+        }
+
+
+
+        /* =========================
+           UPDATE BOUQUET PREVIEW
+        ========================= */
+
+        function updatePreview() {
+
+
+            const flower =
+                document.querySelector(
+                    'input[name="flower"]:checked'
+                );
+
+
+            if (!flower) {
+                return;
+            }
+
+
+            const flowerName =
+                flower.value;
+
+
+            const imagePath =
+                bouquetImages[
+                    flowerName
+                ];
+
+
+            previewContainer.innerHTML = `
+
+                <img
+                    src="${imagePath}"
+                    alt="${flowerName} Bouquet"
+                    class="preview-image"
+                    onerror="this.style.display='none';"
+                >
+
+            `;
+
+
+            previewName.textContent =
+                `${flowerName} Bouquet`;
+
+        }
+
+
+
+        /* =========================
+           UPDATE CART COUNT
+        ========================= */
+
+        function updateCartCount() {
+
+
+            let cart = [];
+
+
+            try {
+
+                cart =
+                    JSON.parse(
+                        localStorage.getItem(
+                            'arnaverseCart'
+                        )
+                    ) || [];
+
+            } catch (error) {
+
+                cart = [];
+
+            }
+
+
+            const count =
+                cart.reduce(
+                    (total, item) =>
+                        total +
+                        Number(
+                            item.quantity || 1
+                        ),
+                    0
+                );
+
+
+            cartCountElement.textContent =
+                count;
+
+        }
+
+
+
+        /* =========================
+           OPTION CHANGE
+        ========================= */
+
+        allOptions.forEach(
+            option => {
+
+                option.addEventListener(
+                    'change',
+                    function () {
+
+                        calculatePrice();
+
+                        updatePreview();
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           ADD TO CART
+        ========================= */
+
+        addToCartButton.addEventListener(
+            'click',
+            function () {
+
+
+                const flower =
+                    document.querySelector(
+                        'input[name="flower"]:checked'
+                    );
+
+
+                const size =
+                    document.querySelector(
+                        'input[name="size"]:checked'
+                    );
+
+
+                const ribbon =
+                    document.querySelector(
+                        'input[name="ribbon"]:checked'
+                    );
+
+
+                const card =
+                    document.querySelector(
+                        'input[name="card"]:checked'
+                    );
+
+
+                if (
+                    !flower ||
+                    !size ||
+                    !ribbon ||
+                    !card
+                ) {
+
+                    alert(
+                        "Please select all bouquet options."
+                    );
+
+                    return;
+
+                }
+
+
+                const total =
+                    calculatePrice();
+
+
+                const flowerName =
+                    flower.value;
+
+
+                const sizeName =
+                    size.value;
+
+
+                const ribbonName =
+                    ribbon.value;
+
+
+                const cardName =
+                    card.value;
+
+
+                const bouquetImage =
+                    bouquetImages[
+                        flowerName
+                    ];
+
+
+
+                /* =========================
+                   GET CART
+                ========================= */
+
+                let cart = [];
+
+
+                try {
+
+                    cart =
+                        JSON.parse(
+                            localStorage.getItem(
+                                'arnaverseCart'
+                            )
+                        ) || [];
+
+                } catch (error) {
+
+                    cart = [];
+
+                }
+
+
+
+                /* =========================
+                   UNIQUE ID
+                ========================= */
+
+                const customId =
+
+                    `custom-${flowerName}-${sizeName}-${ribbonName}-${cardName}`
+
+                    .toLowerCase()
+
+                    .replace(
+                        /\s+/g,
+                        '-'
+                    );
+
+
+
+                /* =========================
+                   EXISTING ITEM
+                ========================= */
+
+                const existingItem =
+                    cart.find(
+                        item =>
+                            item.id === customId
+                    );
+
+
+
+                if (existingItem) {
+
+
+                    existingItem.quantity =
+
+                        Number(
+                            existingItem.quantity || 1
+                        ) + 1;
+
+
+                    existingItem.price =
+                        total;
+
+
+                    existingItem.image =
+                        bouquetImage;
+
+
+                    existingItem.customization = {
+
+                        flowers:
+                            flowerName,
+
+                        size:
+                            sizeName,
+
+                        ribbon:
+                            ribbonName,
+
+                        card:
+                            cardName
+
+                    };
+
+
+                } else {
+
+
+                    cart.push({
+
+                        id:
+                            customId,
+
+
+                        name:
+                            `Custom ${flowerName} Bouquet`,
+
+
+                        category:
+                            'Customized Bouquet',
+
+
+                        price:
+                            total,
+
+
+                        image:
+                            bouquetImage,
+
+
+                        quantity:
+                            1,
+
+
+                        customization: {
+
+                            flowers:
+                                flowerName,
+
+                            size:
+                                sizeName,
+
+                            ribbon:
+                                ribbonName,
+
+                            card:
+                                cardName
+
+                        }
+
+                    });
+
+                }
+
+
+
+                /* =========================
+                   SAVE CART
+                ========================= */
+
+                localStorage.setItem(
+
+                    'arnaverseCart',
+
+                    JSON.stringify(cart)
+
+                );
+
+
+
+                /* UPDATE COUNT */
+
+                updateCartCount();
+
+
+
+                /* SUCCESS MESSAGE */
+
+                alert(
+
+                    `Custom ${flowerName} Bouquet added to cart successfully! 🌸`
+
+                );
+
+
+
+                /* GO TO CART */
+
+                window.location.href =
+                    './cart.html';
+
+
+            }
+        );
+
+
+
+        /* =========================
+           INITIAL LOAD
+        ========================= */
+
+        calculatePrice();
+
+        updatePreview();
+
+        updateCartCount();
+
+
+    </script>
+
+
+</body>
+</html>

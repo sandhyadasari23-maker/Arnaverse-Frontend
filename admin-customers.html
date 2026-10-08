@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers - Arnaverse Admin</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff8fb;
+            color: #333;
+        }
+
+        .admin-header {
+            background: #a8325d;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .logout-btn {
+            background: white;
+            color: #a8325d;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .top-section h2 {
+            margin: 0;
+            color: #a8325d;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: #a8325d;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        .customer-count {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .customer-count strong {
+            color: #a8325d;
+            font-size: 22px;
+        }
+
+        .customers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .customer-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .customer-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #fde6ef;
+            color: #a8325d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .customer-card h3 {
+            margin: 0 0 10px;
+            color: #a8325d;
+        }
+
+        .customer-info {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .customer-info strong {
+            display: inline-block;
+            width: 95px;
+        }
+
+        .no-customers {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        @media (max-width: 900px) {
+            .customers-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .admin-header {
+                padding: 15px;
+            }
+
+            .admin-header h1 {
+                font-size: 19px;
+            }
+
+            .admin-container {
+                padding: 0 15px;
+            }
+
+            .customers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="admin-header">
+    <h1>🌸 Arnaverse Admin</h1>
+
+    <button class="logout-btn" id="adminLogout">
+        Logout
+    </button>
+</header>
+
+<main class="admin-container">
+
+    <div class="top-section">
+        <h2>👥 Customers</h2>
+
+        <a href="./admin-dashboard.html" class="back-btn">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="customer-count">
+        Total Customers:
+        <strong id="customerCount">0</strong>
+    </div>
+
+    <div id="customersContainer" class="customers-grid"></div>
+
+</main>
+
+<script>
+
+    // ==========================================
+    // ADMIN LOGIN CHECK
+    // ==========================================
+
+    const adminLoggedIn =
+        localStorage.getItem("arnaverseAdminLoggedIn");
+
+    if (adminLoggedIn !== "true") {
+        window.location.href = "admin-login.html";
+    }
+
+
+    // ==========================================
+    // LOAD CUSTOMERS
+    // ==========================================
+
+    function loadCustomers() {
+
+        const container =
+            document.getElementById("customersContainer");
+
+        const customerCount =
+            document.getElementById("customerCount");
+
+        const registeredUser =
+            JSON.parse(localStorage.getItem("arnaverseUser"));
+
+        const orders =
+            JSON.parse(localStorage.getItem("arnaverseOrders")) || [];
+
+        let customers = [];
+
+        // Current registered user
+        if (registeredUser) {
+
+            customers.push({
+                name: registeredUser.name,
+                email: registeredUser.email,
+                phone: registeredUser.phone || "Not provided",
+                orders: []
+            });
+        }
+
+
+        // Add customers from orders
+        orders.forEach(function(order) {
+
+            const existingCustomer =
+                customers.find(function(customer) {
+
+                    return customer.email.toLowerCase() ===
+                        String(order.email || "").toLowerCase();
+                });
+
+            if (existingCustomer) {
+
+                existingCustomer.orders.push(order);
+
+            } else {
+
+                customers.push({
+                    name: order.name || "Customer",
+                    email: order.email || "Not provided",
+                    phone: order.phone || "Not provided",
+                    orders: [order]
+                });
+            }
+        });
+
+
+        customerCount.textContent = customers.length;
+
+
+        if (customers.length === 0) {
+
+            container.innerHTML = `
+                <div class="no-customers">
+                    <h3>👤 No Customers Found</h3>
+                    <p>No registered customers or orders available.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML = "";
+
+
+        customers.forEach(function(customer) {
+
+            const totalOrders =
+                customer.orders.length;
+
+            let totalSpent = 0;
+
+            customer.orders.forEach(function(order) {
+
+                totalSpent += Number(order.total) || 0;
+
+            });
+
+
+            const card =
+                document.createElement("div");
+
+            card.className = "customer-card";
+
+            card.innerHTML = `
+                <div class="customer-icon">
+                    👤
+                </div>
+
+                <h3>${customer.name}</h3>
+
+                <div class="customer-info">
+                    <strong>Email:</strong>
+                    ${customer.email}
+                </div>
+
+                <div class="customer-info">
+                    <strong>Phone:</strong>
+                    ${customer.phone}
+                </div>
+
+                <div class="customer-info">
+                    <strong>Orders:</strong>
+                    ${totalOrders}
+                </div>
+
+                <div class="customer-info">
+                    <strong>Spent:</strong>
+                    ₹${totalSpent}
+                </div>
+            `;
+
+            container.appendChild(card);
+
+        });
+
+    }
+
+
+    // ==========================================
+    // ADMIN LOGOUT
+    // ==========================================
+
+    document
+        .getElementById("adminLogout")
+        .addEventListener("click", function() {
+
+            localStorage.removeItem(
+                "arnaverseAdminLoggedIn"
+            );
+
+            window.location.href =
+                "admin-login.html";
+
+        });
+
+
+    // ==========================================
+    // START
+    // ==========================================
+
+    loadCustomers();
+
+</script>
+
+</body>
+</html>

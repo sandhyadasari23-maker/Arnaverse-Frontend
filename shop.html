@@ -1,0 +1,862 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Arnaverse | Shop Bouquets</title>
+
+     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: #fff8fb;
+            color: #263238;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            width: 100%;
+            background: white;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: "Playfair Display", serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #a8325d;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #a8325d;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .cart-icon {
+            position: relative;
+            text-decoration: none;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #a8325d;
+            color: white;
+            font-size: 11px;
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-btn {
+            background: #a8325d;
+            color: white !important;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        /* ================= HEADER ================= */
+
+        .shop-header {
+            text-align: center;
+            padding: 70px 20px 35px;
+        }
+
+        .shop-header h1 {
+            font-family: "Playfair Display", serif;
+            font-size: 46px;
+            color: #263238;
+            margin-bottom: 10px;
+        }
+
+        .shop-header p {
+            color: #777;
+            font-size: 17px;
+        }
+
+        /* ================= FILTER ================= */
+
+        .filters {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 13px 18px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            font-family: "DM Sans", sans-serif;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .filters input {
+            width: 350px;
+        }
+
+        /* ================= GRID ================= */
+
+        .bouquet-grid {
+            width: 92%;
+            max-width: 1500px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding-bottom: 70px;
+        }
+
+        /* ================= CARD ================= */
+
+        .bouquet-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            transition: 0.3s;
+        }
+
+        .bouquet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        /* ================= IMAGE ================= */
+
+        .bouquet-image {
+            width: 100%;
+            height: 320px;
+            background: #f5e7dd;
+            overflow: hidden;
+        }
+
+        .bouquet-image img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .bouquet-content {
+            padding: 25px;
+        }
+
+        .category {
+            color: #b52f61;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .bouquet-content h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 25px;
+            margin-bottom: 12px;
+            color: #263238;
+        }
+
+        .price {
+            color: #b52f61;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .stock {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .add-cart {
+            width: 100%;
+            border: none;
+            background: #b52f61;
+            color: white;
+            padding: 13px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .add-cart:hover {
+            background: #92264d;
+        }
+
+        /* ================= IMAGE ERROR ================= */
+
+        .image-error {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            color: #a8325d;
+        }
+
+        .image-error i {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #2f2630;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+
+            .bouquet-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .bouquet-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .bouquet-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .shop-header h1 {
+                font-size: 36px;
+            }
+
+            .filters input {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <a href="./index.html" class="logo">
+        Arnaverse
+    </a>
+
+    <div class="nav-links">
+
+        <a href="./index.html">
+            Home
+        </a>
+
+        <a href="./shop.html">
+            Shop
+        </a>
+
+        <a href="./index.html#how-it-works">
+            How It Works
+        </a>
+
+        <a href="./index.html#about">
+            About
+        </a>
+
+        <a href="./ai-recommendation.html">
+            AI Picks
+        </a>
+
+    </div>
+
+    <div class="nav-actions">
+
+        <a href="./cart.html" class="cart-icon">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            <span
+                class="cart-count"
+                id="cartCount"
+            >0</span>
+
+        </a>
+
+        <a
+            href="./login.html"
+            class="login-btn"
+        >
+            Login
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HEADER ================= -->
+
+<section class="shop-header">
+
+    <h1>
+        Our Bouquets
+    </h1>
+
+    <p>
+        Beautiful bouquets for every special moment.
+    </p>
+
+</section>
+
+
+<!-- ================= FILTER ================= -->
+
+<div class="filters">
+
+    <input
+        type="text"
+        id="shopSearch"
+        placeholder="Search bouquets..."
+    >
+
+    <select id="categoryFilter">
+
+        <option value="all">
+            All Categories
+        </option>
+
+        <option value="Mixed Flowers">
+            Mixed Flowers
+        </option>
+
+        <option value="Rose">
+            Rose
+        </option>
+
+        <option value="Lily">
+            Lily
+        </option>
+
+        <option value="Wedding">
+            Wedding
+        </option>
+
+        <option value="Tulip">
+            Tulip
+        </option>
+
+    </select>
+
+</div>
+
+
+<!-- ================= BOUQUETS ================= -->
+
+<div
+    class="bouquet-grid"
+    id="bouquetGrid"
+></div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    © 2026 Arnaverse — Smart Online Bouquet Ordering
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   BOUQUET DATA
+===================================================== */
+
+const bouquets = [
+
+    {
+        id: 1,
+        name: "Purple Mixed Bouquet",
+        price: 650,
+        stock: 10,
+        category: "Mixed Flowers",
+        image: "./assets/images/bouquets/purple-mixed-bouquet.jpeg"
+    },
+
+    {
+        id: 2,
+        name: "Mixed Red & White Bouquet",
+        price: 600,
+        stock: 10,
+        category: "Mixed Flowers",
+        image: "./assets/images/bouquets/mixed-red-white-bouquet.jpeg"
+    },
+
+    {
+        id: 3,
+        name: "Red Rose Bouquet",
+        price: 450,
+        stock: 10,
+        category: "Rose",
+        image: "./assets/images/bouquets/red-rose-bouquet.jpeg"
+    },
+
+    {
+        id: 4,
+        name: "Purple Lily Bouquet",
+        price: 700,
+        stock: 10,
+        category: "Lily",
+        image: "./assets/images/bouquets/purple-lily-bouquet.jpeg"
+    },
+
+    {
+        id: 5,
+        name: "Elegant Wedding Bouquet",
+        price: 850,
+        stock: 10,
+        category: "Wedding",
+        image: "./assets/images/bouquets/wedding-bouquet.jpeg"
+    },
+
+    {
+        id: 6,
+        name: "Pink Tulip Bouquet",
+        price: 550,
+        stock: 10,
+        category: "Tulip",
+        image: "./assets/images/bouquets/pink-tulip-bouquet.jpeg"
+    },
+
+    {
+        id: 7,
+        name: "Red Twin Rose Bouquet",
+        price: 500,
+        stock: 10,
+        category: "Rose",
+        image: "./assets/images/bouquets/red-twin-rose-bouquet.jpeg"
+    },
+
+    {
+        id: 8,
+        name: "Red Rose Special Bouquet",
+        price: 600,
+        stock: 10,
+        category: "Rose",
+        image: "./assets/images/bouquets/red-rose-bouquet-2.jpeg"
+    }
+
+];
+
+
+/* =====================================================
+   DISPLAY BOUQUETS
+===================================================== */
+
+function displayBouquets(list) {
+
+    const grid =
+        document.getElementById("bouquetGrid");
+
+    grid.innerHTML = "";
+
+
+    if (list.length === 0) {
+
+        grid.innerHTML = `
+
+            <div
+                style="
+                    grid-column:1/-1;
+                    text-align:center;
+                    padding:60px;
+                    color:#777;
+                "
+            >
+                No bouquets found.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.forEach(function(bouquet) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "bouquet-card";
+
+
+        card.innerHTML = `
+
+            <div class="bouquet-image">
+
+                <img
+                    src="${bouquet.image}"
+                    alt="${bouquet.name}"
+                    onerror="handleImageError(this, '${bouquet.name}')"
+                >
+
+            </div>
+
+
+            <div class="bouquet-content">
+
+                <div class="category">
+                    ${bouquet.category}
+                </div>
+
+                <h2>
+                    ${bouquet.name}
+                </h2>
+
+                <div class="price">
+                    ₹${bouquet.price}
+                </div>
+
+                <div class="stock">
+                    ${bouquet.stock} available
+                </div>
+
+                <button
+                    class="add-cart"
+                    onclick="addToCart(${bouquet.id})"
+                >
+
+                    <i class="fa-solid fa-cart-plus"></i>
+
+                    Add to Cart
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =====================================================
+   IMAGE ERROR
+===================================================== */
+
+function handleImageError(img, name) {
+
+    console.error(
+        "Image not found:",
+        img.src
+    );
+
+
+    img.parentElement.innerHTML = `
+
+        <div class="image-error">
+
+            <i class="fa-regular fa-image"></i>
+
+            <strong>
+                Image not found
+            </strong>
+
+            <small>
+                ${name}
+            </small>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   ADD TO CART
+===================================================== */
+
+function addToCart(id) {
+
+    const bouquet =
+        bouquets.find(function(item) {
+
+            return item.id === id;
+
+        });
+
+
+    if (!bouquet) {
+        return;
+    }
+
+
+    let cart =
+        JSON.parse(
+            localStorage.getItem("arnaverseCart")
+        ) || [];
+
+
+    const existing =
+        cart.find(function(item) {
+
+            return String(item.id) ===
+                String(bouquet.id);
+
+        });
+
+
+    if (existing) {
+
+        existing.quantity =
+            Number(existing.quantity || 0) + 1;
+
+        existing.image =
+            bouquet.image;
+
+    } else {
+
+        cart.push({
+
+            id: bouquet.id,
+
+            name: bouquet.name,
+
+            category: bouquet.category,
+
+            price: bouquet.price,
+
+            image: bouquet.image,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    localStorage.setItem(
+        "arnaverseCart",
+        JSON.stringify(cart)
+    );
+
+
+    updateCartCount();
+
+
+    alert(
+        bouquet.name + " added to cart!"
+    );
+
+}
+
+
+/* =====================================================
+   CART COUNT
+===================================================== */
+
+function updateCartCount() {
+
+    const cart =
+        JSON.parse(
+            localStorage.getItem("arnaverseCart")
+        ) || [];
+
+
+    const count =
+        cart.reduce(
+            function(total, item) {
+
+                return total +
+                    Number(item.quantity || 0);
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "cartCount"
+    ).textContent = count;
+
+}
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+function filterBouquets() {
+
+    const search =
+        document
+            .getElementById("shopSearch")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const category =
+        document
+            .getElementById("categoryFilter")
+            .value;
+
+
+    const filtered =
+        bouquets.filter(
+            function(bouquet) {
+
+                const matchesSearch =
+                    bouquet.name
+                        .toLowerCase()
+                        .includes(search);
+
+
+                const matchesCategory =
+                    category === "all" ||
+                    bouquet.category === category;
+
+
+                return (
+                    matchesSearch &&
+                    matchesCategory
+                );
+
+            }
+        );
+
+
+    displayBouquets(filtered);
+
+}
+
+
+/* =====================================================
+   EVENTS
+===================================================== */
+
+document
+    .getElementById("shopSearch")
+    .addEventListener(
+        "input",
+        filterBouquets
+    );
+
+
+document
+    .getElementById("categoryFilter")
+    .addEventListener(
+        "change",
+        filterBouquets
+    );
+
+
+/* =====================================================
+   START
+===================================================== */
+
+displayBouquets(bouquets);
+
+updateCartCount();
+
+</script>
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Orders - Arnaverse</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+
+        body {
+            margin: 0;
+            background: #fff8fb;
+            font-family: Arial, sans-serif;
+        }
+
+        .admin-header {
+            background: #a8325d;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h2 {
+            margin: 0;
+        }
+
+        .admin-header p {
+            margin: 5px 0 0;
+        }
+
+        .admin-header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn {
+            background: white;
+            color: #a8325d;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px 20px;
+        }
+
+        .page-title {
+            color: #a8325d;
+            margin-bottom: 25px;
+        }
+
+        .orders-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(168, 50, 93, 0.10);
+        }
+
+        .order-box {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .order-header {
+            background: #fff0f5;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .order-id {
+            color: #a8325d;
+            font-weight: 700;
+            font-size: 17px;
+        }
+
+        .order-date {
+            color: #777;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .order-body {
+            padding: 20px;
+        }
+
+        .customer-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            background: #fafafa;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .info-item strong {
+            color: #a8325d;
+        }
+
+        .items-title {
+            color: #a8325d;
+            margin-bottom: 10px;
+        }
+
+        /* BOUQUET ITEM */
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-image {
+            width: 75px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            flex-shrink: 0;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .item-quantity {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .item-price {
+            color: #a8325d;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .order-total {
+            text-align: right;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #a8325d;
+        }
+
+        .status-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .status-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .status-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .status-select {
+            padding: 11px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 14px;
+            min-width: 210px;
+            background: white;
+        }
+
+        .update-btn {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 7px;
+            background: #a8325d;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .update-btn:hover {
+            background: #8f294e;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .placed {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .preparing {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .out {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .delivered {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .empty-orders {
+            text-align: center;
+            padding: 50px 20px;
+            color: #777;
+        }
+
+        .empty-orders h2 {
+            color: #a8325d;
+        }
+
+        @media (max-width: 700px) {
+
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .customer-info {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-container {
+                padding: 25px 15px;
+            }
+
+            .orders-card {
+                padding: 15px;
+            }
+
+            .status-select {
+                width: 100%;
+            }
+
+            .update-btn {
+                width: 100%;
+            }
+
+            .item-row {
+                align-items: flex-start;
+            }
+
+            .item-image {
+                width: 65px;
+                height: 65px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     ADMIN HEADER
+========================================== -->
+
+<header class="admin-header">
+
+    <div>
+
+        <h2>
+            🌸 ARNAVERSE Admin Panel
+        </h2>
+
+        <p>
+            Manage Customer Orders
+        </p>
+
+    </div>
+
+
+    <div class="admin-header-buttons">
+
+        <a
+            href="./admin-dashboard.html"
+            class="header-btn"
+        >
+            Dashboard
+        </a>
+
+
+        <button
+            class="header-btn"
+            id="logoutBtn"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ==========================================
+     MAIN
+========================================== -->
+
+<main class="admin-container">
+
+    <h1 class="page-title">
+        Manage Orders
+    </h1>
+
+
+    <section class="orders-card">
+
+        <div id="ordersContainer"></div>
+
+    </section>
+
+</main>
+
+
+
+<footer>
+
+    <p>
+        © 2026 Arnaverse |
+        Smart Online Bouquet Ordering
+    </p>
+
+</footer>
+
+
+
+<script>
+
+
+/* =====================================================
+   ADMIN LOGIN CHECK
+===================================================== */
+
+const adminLoggedIn =
+    localStorage.getItem(
+        "arnaverseAdminLoggedIn"
+    );
+
+
+if (adminLoggedIn !== "true") {
+
+    window.location.href =
+        "admin-login.html";
+
+}
+
+
+
+/* =====================================================
+   GET ORDERS
+===================================================== */
+
+function getOrders() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "arnaverseOrders"
+        )
+    ) || [];
+
+}
+
+
+
+/* =====================================================
+   BOUQUET IMAGE MAPPING
+===================================================== */
+function getBouquetImage(item) {
+
+    const name = (
+        item.name ||
+        item.title ||
+        ""
+    ).toLowerCase().trim();
+
+
+    // Purple Mixed Bouquet
+    if (name.includes("purple mixed")) {
+        return "./assets/images/bouquets/purple-mixed-bouquet.jpeg";
+    }
+
+
+    // Mixed Red & White Bouquet
+    if (
+        name.includes("mixed red & white") ||
+        name.includes("mixed red and white")
+    ) {
+        return "./assets/images/bouquets/mixed-red-white-bouquet.jpeg";
+    }
+
+
+    // Red Rose Bouquet
+    if (name.includes("red rose bouquet")) {
+        return "./assets/images/bouquets/red-rose-bouquet.jpeg";
+    }
+
+
+    // Purple Lily Bouquet
+    if (name.includes("purple lily")) {
+        return "./assets/images/bouquets/purple-lily-bouquet.jpeg";
+    }
+
+
+    // Wedding Bouquet
+    if (name.includes("wedding")) {
+        return "./assets/images/bouquets/wedding-bouquet.jpeg";
+    }
+
+
+    // Pink Tulip Bouquet
+    if (name.includes("pink tulip")) {
+        return "./assets/images/bouquets/pink-tulip-bouquet.jpeg";
+    }
+
+
+    // Red Twin Rose Bouquet
+    if (name.includes("twin rose")) {
+        return "./assets/images/bouquets/red-twin-rose-bouquet.jpeg";
+    }
+
+
+    // Red Rose Bouquet 2
+    if (
+        name.includes("rose bouquet 2") ||
+        name.includes("special red rose")
+    ) {
+        return "./assets/images/bouquets/red-rose-bouquet-2.jpeg";
+    }
+
+
+    // If image is already stored in order
+    if (item.image) {
+        return item.image;
+    }
+
+
+    if (item.img) {
+        return item.img;
+    }
+
+
+    if (item.imageUrl) {
+        return item.imageUrl;
+    }
+
+
+    // Final fallback
+    return "./assets/images/bouquets/hero-bouquet.jpeg";
+}
+
+
+
+/* =====================================================
+   DATE FORMAT
+===================================================== */
+
+function formatOrderDate(order) {
+
+    const rawDate =
+        order.createdAt ||
+        order.orderDate ||
+        order.date ||
+        "";
+
+
+    if (!rawDate) {
+
+        return "Date not recorded";
+
+    }
+
+
+    /* ISO DATE */
+
+    if (
+        typeof rawDate === "string" &&
+        rawDate.includes("T")
+    ) {
+
+        const date =
+            new Date(rawDate);
+
+
+        if (!isNaN(date.getTime())) {
+
+            return date.toLocaleString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            );
+
+        }
+
+    }
+
+
+    /* INDIAN DATE FORMAT */
+
+    if (
+        typeof rawDate === "string" &&
+        rawDate.includes("/")
+    ) {
+
+        const parts =
+            rawDate.split(",");
+
+
+        const datePart =
+            parts[0].trim();
+
+
+        const timePart =
+            parts[1]
+                ? parts[1].trim()
+                : "12:00:00 am";
+
+
+        const dateValues =
+            datePart.split("/");
+
+
+        if (dateValues.length === 3) {
+
+            const day =
+                parseInt(dateValues[0]);
+
+
+            const month =
+                parseInt(dateValues[1]) - 1;
+
+
+            const year =
+                parseInt(dateValues[2]);
+
+
+            let hour = 0;
+            let minute = 0;
+            let second = 0;
+
+
+            const timeMatch =
+                timePart.match(
+                    /(\d+):(\d+):(\d+)\s*(am|pm)/i
+                );
+
+
+            if (timeMatch) {
+
+                hour =
+                    parseInt(timeMatch[1]);
+
+
+                minute =
+                    parseInt(timeMatch[2]);
+
+
+                second =
+                    parseInt(timeMatch[3]);
+
+
+                const ampm =
+                    timeMatch[4].toLowerCase();
+
+
+                if (
+                    ampm === "pm" &&
+                    hour !== 12
+                ) {
+
+                    hour += 12;
+
+                }
+
+
+                if (
+                    ampm === "am" &&
+                    hour === 12
+                ) {
+
+                    hour = 0;
+
+                }
+
+            }
+
+
+            const date =
+                new Date(
+                    year,
+                    month,
+                    day,
+                    hour,
+                    minute,
+                    second
+                );
+
+
+            if (!isNaN(date.getTime())) {
+
+                return date.toLocaleString(
+                    "en-IN",
+                    {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                );
+
+            }
+
+        }
+
+    }
+
+
+    return "Date not recorded";
+
+}
+
+
+
+/* =====================================================
+   STATUS CLASS
+===================================================== */
+
+function getStatusClass(status) {
+
+    const value =
+        (status || "").toLowerCase();
+
+
+    if (
+        value.includes("cancel")
+    ) {
+
+        return "cancelled";
+
+    }
+
+
+    if (
+        value.includes("deliver")
+    ) {
+
+        return "delivered";
+
+    }
+
+
+    if (
+        value.includes("out")
+    ) {
+
+        return "out";
+
+    }
+
+
+    if (
+        value.includes("prepar")
+    ) {
+
+        return "preparing";
+
+    }
+
+
+    return "placed";
+
+}
+
+
+
+/* =====================================================
+   DISPLAY ORDERS
+===================================================== */
+
+function displayOrders() {
+
+    const orders =
+        getOrders();
+
+
+    const ordersContainer =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+
+    ordersContainer.innerHTML = "";
+
+
+    if (orders.length === 0) {
+
+        ordersContainer.innerHTML = `
+
+            <div class="empty-orders">
+
+                <h2>
+                    📦 No Orders Found
+                </h2>
+
+                <p>
+                    Customer orders will appear here
+                    after a successful checkout.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+       NEWEST FIRST
+    */
+
+    const reversedOrders =
+        orders.slice().reverse();
+
+
+    reversedOrders.forEach(
+        function(order) {
+
+
+            const orderBox =
+                document.createElement(
+                    "div"
+                );
+
+
+            orderBox.className =
+                "order-box";
+
+
+            /* =================================
+               ITEMS
+            ================================= */
+
+            let itemsHTML = "";
+
+
+            if (
+                Array.isArray(order.items)
+            ) {
+
+                order.items.forEach(
+                    function(item) {
+
+
+                        const itemName =
+                            item.name ||
+                            item.title ||
+                            "Bouquet";
+
+
+                        const quantity =
+                            Number(
+                                item.quantity || 1
+                            );
+
+
+                        const price =
+                            Number(
+                                item.price || 0
+                            );
+
+
+                        const image =
+                            getBouquetImage(
+                                item
+                            );
+
+
+                        itemsHTML += `
+
+                            <div class="item-row">
+
+                                <img
+                                    src="${image}"
+                                    class="item-image"
+                                    alt="${itemName}"
+                                    onerror="
+                                        this.onerror=null;
+                                        this.src='assets/images/bouquets/hero-bouquet.jpeg';
+                                    "
+                                >
+
+
+                                <div class="item-details">
+
+                                    <div class="item-name">
+                                        ${itemName}
+                                    </div>
+
+                                    <div class="item-quantity">
+                                        Quantity: ${quantity}
+                                    </div>
+
+                                </div>
+
+
+                                <div class="item-price">
+
+                                    ₹${price * quantity}
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+                );
+
+            }
+
+
+
+            /* =================================
+               ORDER STATUS
+            ================================= */
+
+            const currentStatus =
+                order.status ||
+                "Order Placed";
+
+
+
+            /* =================================
+               ORDER HTML
+            ================================= */
+
+            orderBox.innerHTML = `
+
+                <div class="order-header">
+
+                    <div>
+
+                        <div class="order-id">
+
+                            Order ID:
+                            ${order.orderId || "N/A"}
+
+                        </div>
+
+
+                        <div class="order-date">
+
+                            📅
+                            ${formatOrderDate(order)}
+
+                        </div>
+
+                    </div>
+
+
+                    <span
+                        class="status-badge ${getStatusClass(currentStatus)}"
+                    >
+
+                        ${currentStatus}
+
+                    </span>
+
+                </div>
+
+
+
+                <div class="order-body">
+
+
+                    <!-- CUSTOMER -->
+
+                    <h3 class="items-title">
+
+                        👤 Customer Details
+
+                    </h3>
+
+
+                    <div class="customer-info">
+
+
+                        <div class="info-item">
+
+                            <strong>Name:</strong>
+                            ${order.name || "-"}
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <strong>Phone:</strong>
+                            ${order.phone || "-"}
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <strong>Address:</strong>
+                            ${order.address || "-"}
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <strong>City:</strong>
+                            ${order.city || "-"}
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <strong>Pincode:</strong>
+                            ${order.pincode || "-"}
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <strong>Payment:</strong>
+                            ${order.paymentMethod || "COD"}
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- BOUQUETS -->
+
+                    <h3 class="items-title">
+
+                        💐 Ordered Bouquets
+
+                    </h3>
+
+
+                    ${itemsHTML}
+
+
+
+                    <!-- TOTAL -->
+
+                    <div class="order-total">
+
+                        Total:
+                        ₹${Number(order.total || 0)}
+
+                    </div>
+
+
+
+                    <!-- STATUS -->
+
+                    <div class="status-section">
+
+
+                        <label>
+
+                            Update Order Status
+
+                        </label>
+
+
+                        <div class="status-controls">
+
+
+                            <select
+                                class="status-select"
+                                id="status-${order.orderId}"
+                            >
+
+                                <option
+                                    value="Order Placed"
+                                    ${currentStatus === "Order Placed" ? "selected" : ""}
+                                >
+                                    Order Placed
+                                </option>
+
+
+                                <option
+                                    value="Preparing"
+                                    ${currentStatus === "Preparing" ? "selected" : ""}
+                                >
+                                    Preparing
+                                </option>
+
+
+                                <option
+                                    value="Out for Delivery"
+                                    ${currentStatus === "Out for Delivery" ? "selected" : ""}
+                                >
+                                    Out for Delivery
+                                </option>
+
+
+                                <option
+                                    value="Delivered"
+                                    ${currentStatus === "Delivered" ? "selected" : ""}
+                                >
+                                    Delivered
+                                </option>
+
+
+                                <option
+                                    value="Cancelled"
+                                    ${currentStatus === "Cancelled" ? "selected" : ""}
+                                >
+                                    Cancelled
+                                </option>
+
+                            </select>
+
+
+                            <button
+                                class="update-btn"
+                                onclick="updateOrderStatus('${order.orderId}')"
+                            >
+
+                                Update Status
+
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            `;
+
+
+            ordersContainer.appendChild(
+                orderBox
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   UPDATE ORDER STATUS
+===================================================== */
+
+function updateOrderStatus(orderId) {
+
+
+    const select =
+        document.getElementById(
+            "status-" + orderId
+        );
+
+
+    if (!select) {
+
+        return;
+
+    }
+
+
+    const newStatus =
+        select.value;
+
+
+    let orders =
+        getOrders();
+
+
+    let updatedOrder =
+        null;
+
+
+    /*
+       UPDATE MAIN ORDERS ARRAY
+    */
+
+    orders =
+        orders.map(
+            function(order) {
+
+
+                if (
+                    order.orderId === orderId
+                ) {
+
+
+                    order.status =
+                        newStatus;
+
+
+                    /*
+                       STATUS UPDATE TIME
+                    */
+
+                    order.updatedAt =
+                        new Date().toISOString();
+
+
+                    updatedOrder =
+                        order;
+
+                }
+
+
+                return order;
+
+            }
+        );
+
+
+    /*
+       SAVE ALL ORDERS
+    */
+
+    localStorage.setItem(
+        "arnaverseOrders",
+        JSON.stringify(orders)
+    );
+
+
+
+    /*
+       UPDATE LATEST ORDER
+    */
+
+    const currentOrder =
+        JSON.parse(
+            localStorage.getItem(
+                "arnaverseOrder"
+            )
+        );
+
+
+    if (
+        currentOrder &&
+        currentOrder.orderId === orderId
+    ) {
+
+
+        currentOrder.status =
+            newStatus;
+
+
+        currentOrder.updatedAt =
+            new Date().toISOString();
+
+
+        localStorage.setItem(
+            "arnaverseOrder",
+            JSON.stringify(
+                currentOrder
+            )
+        );
+
+    }
+
+
+    /*
+       SUCCESS MESSAGE
+    */
+
+    alert(
+        "Order status updated to: " +
+        newStatus
+    );
+
+
+    /*
+       REFRESH DISPLAY
+    */
+
+    displayOrders();
+
+}
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+    .getElementById(
+        "logoutBtn"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+
+            localStorage.removeItem(
+                "arnaverseAdminLoggedIn"
+            );
+
+
+            localStorage.removeItem(
+                "arnaverseAdmin"
+            );
+
+
+            window.location.href =
+                "admin-login.html";
+
+        }
+    );
+
+
+
+/* =====================================================
+   START
+===================================================== */
+
+displayOrders();
+
+</script>
+
+</body>
+
+</html>

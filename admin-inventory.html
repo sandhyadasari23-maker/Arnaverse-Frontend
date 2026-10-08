@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Inventory - Arnaverse</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/style.css"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #fff8fb;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .inventory-header {
+            background: #a8325d;
+            color: white;
+            padding: 22px 30px;
+        }
+
+        .inventory-header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .inventory-header p {
+            margin: 7px 0 0;
+            opacity: 0.9;
+        }
+
+        /* ==============================
+           MAIN CONTAINER
+        ============================== */
+
+        .inventory-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px 20px;
+        }
+
+        /* ==============================
+           SUMMARY CARDS
+        ============================== */
+
+        .inventory-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 14px;
+            box-shadow:
+                0 5px 18px rgba(168, 50, 93, 0.10);
+            text-align: center;
+        }
+
+        .summary-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .summary-card h2 {
+            margin: 5px 0;
+            color: #a8325d;
+            font-size: 28px;
+        }
+
+        .summary-card p {
+            margin: 0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* ==============================
+           SEARCH / FILTER
+        ============================== */
+
+        .inventory-tools {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow:
+                0 5px 18px rgba(168, 50, 93, 0.10);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .search-box {
+            flex: 1;
+        }
+
+        .search-box input,
+        .status-filter select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-box input:focus,
+        .status-filter select:focus {
+            border-color: #a8325d;
+        }
+
+        .status-filter {
+            width: 220px;
+        }
+
+        /* ==============================
+           INVENTORY TABLE
+        ============================== */
+
+        .inventory-table-box {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+
+            box-shadow:
+                0 5px 18px rgba(168, 50, 93, 0.10);
+
+            overflow-x: auto;
+        }
+
+        .inventory-table-title {
+            color: #a8325d;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        .inventory-table th,
+        .inventory-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .inventory-table th {
+            background: #fff0f5;
+            color: #a8325d;
+            font-size: 14px;
+        }
+
+        .inventory-table td {
+            font-size: 14px;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .product-type {
+            color: #777;
+        }
+
+        .stock-number {
+            font-weight: 700;
+        }
+
+        /* ==============================
+           STATUS BADGES
+        ============================== */
+
+        .stock-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .in-stock {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .low-stock {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .out-stock {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        /* ==============================
+           UPDATE BUTTON
+        ============================== */
+
+        .update-stock-btn {
+            border: none;
+            background: #a8325d;
+            color: white;
+            padding: 9px 14px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .update-stock-btn:hover {
+            background: #8f294f;
+        }
+
+        /* ==============================
+           EMPTY STATE
+        ============================== */
+
+        .empty-message {
+            text-align: center;
+            padding: 35px;
+            color: #777;
+        }
+
+        /* ==============================
+           MODAL
+        ============================== */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.45);
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+
+            z-index: 9999;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            background: white;
+            width: 100%;
+            max-width: 430px;
+
+            padding: 28px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-box h2 {
+            margin-top: 0;
+            color: #a8325d;
+        }
+
+        .modal-product {
+            background: #fff0f5;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .modal-box label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+        }
+
+        .modal-box input {
+            width: 100%;
+            padding: 12px;
+
+            border: 1px solid #ddd;
+            border-radius: 8px;
+
+            font-size: 15px;
+            outline: none;
+        }
+
+        .modal-box input:focus {
+            border-color: #a8325d;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        .cancel-btn {
+            background: #eee;
+            color: #333;
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: #a8325d;
+            color: white;
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+        .save-btn:hover {
+            background: #8f294f;
+        }
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #777;
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 900px) {
+
+            .inventory-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .inventory-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .inventory-tools {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .status-filter {
+                width: 100%;
+            }
+
+            .inventory-header {
+                padding: 20px;
+            }
+
+            .inventory-container {
+                padding: 25px 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <header class="inventory-header">
+
+        <h1>
+            📦 Inventory
+        </h1>
+
+        <p>
+            Manage flowers, bouquets and available stock.
+        </p>
+
+    </header>
+
+
+    <!-- ==========================================
+         MAIN
+    =========================================== -->
+
+    <main class="inventory-container">
+
+
+        <!-- ======================================
+             SUMMARY
+        ======================================= -->
+
+        <section class="inventory-summary">
+
+
+            <!-- TOTAL ITEMS -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📦
+                </div>
+
+                <h2 id="totalItems">
+                    0
+                </h2>
+
+                <p>
+                    Total Items
+                </p>
+
+            </div>
+
+
+            <!-- IN STOCK -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🟢
+                </div>
+
+                <h2 id="inStockItems">
+                    0
+                </h2>
+
+                <p>
+                    In Stock
+                </p>
+
+            </div>
+
+
+            <!-- LOW STOCK -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🔴
+                </div>
+
+                <h2 id="lowStockItems">
+                    0
+                </h2>
+
+                <p>
+                    Low Stock
+                </p>
+
+            </div>
+
+
+            <!-- OUT OF STOCK -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    ❌
+                </div>
+
+                <h2 id="outStockItems">
+                    0
+                </h2>
+
+                <p>
+                    Out of Stock
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             SEARCH + FILTER
+        ======================================= -->
+
+        <section class="inventory-tools">
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInventory"
+                    placeholder="🔍 Search inventory..."
+                >
+
+            </div>
+
+
+            <div class="status-filter">
+
+                <select id="statusFilter">
+
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="in-stock">
+                        In Stock
+                    </option>
+
+                    <option value="low-stock">
+                        Low Stock
+                    </option>
+
+                    <option value="out-stock">
+                        Out of Stock
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             TABLE
+        ======================================= -->
+
+        <section class="inventory-table-box">
+
+            <h2 class="inventory-table-title">
+                Inventory Items
+            </h2>
+
+
+            <table class="inventory-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Type
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Stock
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="inventoryBody">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================================
+         UPDATE STOCK MODAL
+    =========================================== -->
+
+    <div
+        class="modal"
+        id="stockModal"
+    >
+
+        <div class="modal-box">
+
+            <h2>
+                Update Stock
+            </h2>
+
+
+            <div
+                class="modal-product"
+                id="modalProductName"
+            >
+                Product
+            </div>
+
+
+            <label for="newStock">
+                New Stock
+            </label>
+
+
+            <input
+                type="number"
+                id="newStock"
+                min="0"
+                placeholder="Enter stock quantity"
+            >
+
+
+            <div class="modal-buttons">
+
+                <button
+                    class="cancel-btn"
+                    id="cancelStockBtn"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    class="save-btn"
+                    id="saveStockBtn"
+                >
+                    Update Stock
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         FOOTER
+    =========================================== -->
+
+    <footer>
+
+        <p>
+            © 2026 Arnaverse |
+            Smart Online Bouquet Ordering
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        // ==========================================
+        // GET BOUQUETS
+        // ==========================================
+
+        let bouquets =
+            JSON.parse(
+                localStorage.getItem(
+                    "arnaverseBouquets"
+                )
+            ) || [];
+
+
+        // ==========================================
+        // ELEMENTS
+        // ==========================================
+
+        const totalItems =
+            document.getElementById(
+                "totalItems"
+            );
+
+        const inStockItems =
+            document.getElementById(
+                "inStockItems"
+            );
+
+        const lowStockItems =
+            document.getElementById(
+                "lowStockItems"
+            );
+
+        const outStockItems =
+            document.getElementById(
+                "outStockItems"
+            );
+
+        const inventoryBody =
+            document.getElementById(
+                "inventoryBody"
+            );
+
+        const searchInventory =
+            document.getElementById(
+                "searchInventory"
+            );
+
+        const statusFilter =
+            document.getElementById(
+                "statusFilter"
+            );
+
+
+        // ==========================================
+        // STOCK STATUS
+        // ==========================================
+
+        function getStockStatus(stock) {
+
+            stock = Number(stock || 0);
+
+
+            if (stock === 0) {
+
+                return "out-stock";
+
+            }
+
+
+            if (stock <= 10) {
+
+                return "low-stock";
+
+            }
+
+
+            return "in-stock";
+
+        }
+
+
+        // ==========================================
+        // STATUS TEXT
+        // ==========================================
+
+        function getStatusText(status) {
+
+            if (status === "out-stock") {
+
+                return "❌ Out of Stock";
+
+            }
+
+
+            if (status === "low-stock") {
+
+                return "🔴 Low Stock";
+
+            }
+
+
+            return "🟢 In Stock";
+
+        }
+
+
+        // ==========================================
+        // UPDATE SUMMARY
+        // ==========================================
+
+        function updateSummary() {
+
+            const total =
+                bouquets.length;
+
+
+            const inStock =
+                bouquets.filter(function (bouquet) {
+
+                    return getStockStatus(
+                        bouquet.stock
+                    ) === "in-stock";
+
+                }).length;
+
+
+            const lowStock =
+                bouquets.filter(function (bouquet) {
+
+                    return getStockStatus(
+                        bouquet.stock
+                    ) === "low-stock";
+
+                }).length;
+
+
+            const outStock =
+                bouquets.filter(function (bouquet) {
+
+                    return getStockStatus(
+                        bouquet.stock
+                    ) === "out-stock";
+
+                }).length;
+
+
+            totalItems.textContent =
+                total;
+
+
+            inStockItems.textContent =
+                inStock;
+
+
+            lowStockItems.textContent =
+                lowStock;
+
+
+            outStockItems.textContent =
+                outStock;
+
+        }
+
+
+        // ==========================================
+        // DISPLAY INVENTORY
+        // ==========================================
+
+        function displayInventory() {
+
+            const searchText =
+                searchInventory.value
+                    .toLowerCase()
+                    .trim();
+
+
+            const selectedStatus =
+                statusFilter.value;
+
+
+            inventoryBody.innerHTML = "";
+
+
+            const filteredBouquets =
+                bouquets.filter(function (bouquet) {
+
+                    const name =
+                        String(
+                            bouquet.name || ""
+                        ).toLowerCase();
+
+
+                    const type =
+                        String(
+                            bouquet.type ||
+                            bouquet.flower ||
+                            ""
+                        ).toLowerCase();
+
+
+                    const matchesSearch =
+                        name.includes(searchText) ||
+                        type.includes(searchText);
+
+
+                    const stockStatus =
+                        getStockStatus(
+                            bouquet.stock
+                        );
+
+
+                    const matchesStatus =
+                        selectedStatus === "all" ||
+                        stockStatus === selectedStatus;
+
+
+                    return (
+                        matchesSearch &&
+                        matchesStatus
+                    );
+
+                });
+
+
+            // ======================================
+            // NO RESULTS
+            // ======================================
+
+            if (
+                filteredBouquets.length === 0
+            ) {
+
+                inventoryBody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="empty-message"
+                        >
+                            No inventory items found.
+                        </td>
+
+                    </tr>
+
+                `;
+
+                return;
+
+            }
+
+
+            // ======================================
+            // CREATE ROWS
+            // ======================================
+
+            filteredBouquets.forEach(function (bouquet) {
+
+                const stock =
+                    Number(
+                        bouquet.stock || 0
+                    );
+
+
+                const status =
+                    getStockStatus(stock);
+
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                    <td>
+
+                        <div class="product-name">
+
+                            ${bouquet.name || "Unnamed Bouquet"}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="product-type">
+
+                            ${
+                                bouquet.type ||
+                                bouquet.flower ||
+                                "Bouquet"
+                            }
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        ₹${Number(
+                            bouquet.price || 0
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="stock-number">
+
+                            ${stock}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="stock-status ${status}"
+                        >
+
+                            ${getStatusText(status)}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="update-stock-btn"
+                            onclick="openStockModal('${escapeValue(
+                                bouquet.id ||
+                                bouquet.name
+                            )}')"
+                        >
+                            ✏️ Update Stock
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                inventoryBody.appendChild(row);
+
+            });
+
+        }
+
+
+        // ==========================================
+        // ESCAPE VALUE
+        // ==========================================
+
+        function escapeValue(value) {
+
+            return String(value)
+                .replace(/\\/g, "\\\\")
+                .replace(/'/g, "\\'");
+
+        }
+
+
+        // ==========================================
+        // FIND BOUQUET
+        // ==========================================
+
+        function findBouquet(identifier) {
+
+            return bouquets.find(
+                function (bouquet) {
+
+                    return String(
+                        bouquet.id ||
+                        bouquet.name
+                    ) === String(identifier);
+
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // MODAL VARIABLES
+        // ==========================================
+
+        let selectedBouquet = null;
+
+
+        const stockModal =
+            document.getElementById(
+                "stockModal"
+            );
+
+
+        const modalProductName =
+            document.getElementById(
+                "modalProductName"
+            );
+
+
+        const newStock =
+            document.getElementById(
+                "newStock"
+            );
+
+
+        // ==========================================
+        // OPEN MODAL
+        // ==========================================
+
+        window.openStockModal =
+            function (identifier) {
+
+                selectedBouquet =
+                    findBouquet(identifier);
+
+
+                if (!selectedBouquet) {
+
+                    return;
+
+                }
+
+
+                modalProductName.textContent =
+                    selectedBouquet.name ||
+                    "Bouquet";
+
+
+                newStock.value =
+                    Number(
+                        selectedBouquet.stock || 0
+                    );
+
+
+                stockModal.classList.add(
+                    "show"
+                );
+
+
+                newStock.focus();
+
+            };
+
+
+        // ==========================================
+        // CLOSE MODAL
+        // ==========================================
+
+        function closeStockModal() {
+
+            stockModal.classList.remove(
+                "show"
+            );
+
+            selectedBouquet = null;
+
+        }
+
+
+        document
+            .getElementById(
+                "cancelStockBtn"
+            )
+            .addEventListener(
+                "click",
+                closeStockModal
+            );
+
+
+        // ==========================================
+        // UPDATE STOCK
+        // ==========================================
+
+        document
+            .getElementById(
+                "saveStockBtn"
+            )
+            .addEventListener(
+                "click",
+                function () {
+
+                    if (!selectedBouquet) {
+
+                        return;
+
+                    }
+
+
+                    const stockValue =
+                        Number(
+                            newStock.value
+                        );
+
+
+                    if (
+                        !Number.isFinite(
+                            stockValue
+                        ) ||
+                        stockValue < 0
+                    ) {
+
+                        alert(
+                            "Please enter a valid stock quantity."
+                        );
+
+                        return;
+
+                    }
+
+
+                    selectedBouquet.stock =
+                        Math.floor(
+                            stockValue
+                        );
+
+
+                    // Save updated bouquet data
+
+                    localStorage.setItem(
+                        "arnaverseBouquets",
+                        JSON.stringify(
+                            bouquets
+                        )
+                    );
+
+
+                    closeStockModal();
+
+
+                    updateSummary();
+
+                    displayInventory();
+
+                }
+            );
+
+
+        // ==========================================
+        // SEARCH
+        // ==========================================
+
+        searchInventory
+            .addEventListener(
+                "input",
+                displayInventory
+            );
+
+
+        // ==========================================
+        // STATUS FILTER
+        // ==========================================
+
+        statusFilter
+            .addEventListener(
+                "change",
+                displayInventory
+            );
+
+
+        // ==========================================
+        // CLOSE MODAL OUTSIDE
+        // ==========================================
+
+        stockModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target === stockModal
+                ) {
+
+                    closeStockModal();
+
+                }
+
+            }
+        );
+
+
+        // ==========================================
+        // INITIAL LOAD
+        // ==========================================
+
+        updateSummary();
+
+        displayInventory();
+
+    </script>
+
+</body>
+
+</html>

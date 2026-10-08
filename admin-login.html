@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login - Arnaverse</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        .admin-login-container {
+            min-height: calc(100vh - 140px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            background: #fff8fb;
+        }
+
+        .admin-login-box {
+            width: 100%;
+            max-width: 430px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(168, 50, 93, 0.15);
+        }
+
+        .admin-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #a8325d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .admin-login-box h1 {
+            text-align: center;
+            color: #a8325d;
+            margin-bottom: 8px;
+        }
+
+        .admin-subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .admin-form-group {
+            margin-bottom: 20px;
+        }
+
+        .admin-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .admin-form-group input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .admin-form-group input:focus {
+            border-color: #a8325d;
+        }
+
+        .admin-login-button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #a8325d;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .admin-login-button:hover {
+            background: #8f294e;
+        }
+
+        #adminLoginMessage {
+            text-align: center;
+            margin-top: 18px;
+            font-weight: 500;
+        }
+
+        .admin-back-link {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .admin-back-link a {
+            color: #a8325d;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .admin-back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .admin-demo-info {
+            margin-top: 25px;
+            padding: 15px;
+            background: #fff0f5;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .admin-demo-info strong {
+            color: #a8325d;
+        }
+
+        @media (max-width: 500px) {
+            .admin-login-box {
+                padding: 28px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">🌸 ARNAVERSE</div>
+
+        <nav>
+            <a href="./index.html">Home</a>
+            <a href="./index.html#bouquets">Shop</a>
+            <a href="./login.html">User Login</a>
+        </nav>
+    </header>
+
+
+    <!-- ADMIN LOGIN -->
+    <main class="admin-login-container">
+
+        <div class="admin-login-box">
+
+            <div class="admin-icon">
+                🔐
+            </div>
+
+            <h1>Admin Login</h1>
+
+            <p class="admin-subtitle">
+                Login to manage Arnaverse
+            </p>
+
+
+            <form id="adminLoginForm">
+
+                <div class="admin-form-group">
+
+                    <label for="adminEmail">
+                        Admin Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="adminEmail"
+                        placeholder="Enter admin email"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="adminPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        placeholder="Enter admin password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="admin-login-button"
+                >
+                    Login as Admin
+                </button>
+
+            </form>
+
+
+            <p id="adminLoginMessage"></p>
+
+
+            <!-- DEMO LOGIN DETAILS -->
+            <div class="admin-demo-info">
+
+                <strong>Admin Test Login</strong>
+
+                <br><br>
+
+                Email:
+                <strong>admin@arnaverse.com</strong>
+
+                <br>
+
+                Password:
+                <strong>admin123</strong>
+
+            </div>
+
+
+            <div class="admin-back-link">
+
+                <a href="./index.html">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <p>
+            © 2026 Arnaverse |
+            Smart Online Bouquet Ordering
+        </p>
+    </footer>
+
+
+    <!-- ADMIN LOGIN JAVASCRIPT -->
+    <script>
+
+        const adminLoginForm =
+            document.getElementById("adminLoginForm");
+
+        if (adminLoginForm) {
+
+            adminLoginForm.addEventListener(
+                "submit",
+                function (event) {
+
+                    event.preventDefault();
+
+                    const email =
+                        document
+                            .getElementById("adminEmail")
+                            .value
+                            .trim();
+
+                    const password =
+                        document
+                            .getElementById("adminPassword")
+                            .value;
+
+                    const message =
+                        document.getElementById(
+                            "adminLoginMessage"
+                        );
+
+
+                    // ADMIN CREDENTIALS
+                    const adminEmail =
+                        "admin@arnaverse.com";
+
+                    const adminPassword =
+                        "admin123";
+
+
+                    // CHECK LOGIN
+                    if (
+                        email.toLowerCase() ===
+                            adminEmail.toLowerCase()
+                        &&
+                        password === adminPassword
+                    ) {
+
+                        // Save admin login
+                        localStorage.setItem(
+                            "arnaverseAdminLoggedIn",
+                            "true"
+                        );
+
+
+                        message.textContent =
+                            "✅ Admin login successful! Redirecting...";
+
+                        message.style.color =
+                            "green";
+
+
+                        // Redirect to admin dashboard
+                        setTimeout(function () {
+
+                            window.location.href =
+                                "admin-dashboard.html";
+
+                        }, 1000);
+
+                    } else {
+
+                        message.textContent =
+                            "❌ Invalid admin email or password.";
+
+                        message.style.color =
+                            "red";
+
+                    }
+
+                }
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>

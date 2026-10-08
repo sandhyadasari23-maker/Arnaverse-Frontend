@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - Arnaverse</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        .profile-page {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .profile-title {
+            text-align: center;
+            color: #a8325d;
+            margin-bottom: 30px;
+        }
+
+        .profile-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #fde6ef;
+            color: #a8325d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .profile-name {
+            text-align: center;
+            color: #a8325d;
+            margin-bottom: 30px;
+        }
+
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .profile-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .profile-group label {
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .profile-group input,
+        .profile-group textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .profile-group input:focus,
+        .profile-group textarea:focus {
+            border-color: #a8325d;
+        }
+
+        .profile-group textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .save-profile-btn {
+            grid-column: 1 / -1;
+            background: #a8325d;
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .save-profile-btn:hover {
+            background: #8d284d;
+        }
+
+        #profileMessage {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .profile-actions {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .profile-actions a {
+            text-decoration: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            background: #a8325d;
+            color: white;
+        }
+
+        .profile-actions a.secondary {
+            background: #f3d5e1;
+            color: #a8325d;
+        }
+
+        @media (max-width: 600px) {
+            .profile-page {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+
+            .profile-form {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-group.full-width,
+            .save-profile-btn {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🌸 ARNAVERSE</div>
+
+    <nav>
+        <a href="./index.html">Home</a>
+        <a href="./index.html#bouquets">Shop</a>
+        <a href="./orders.html">My Orders</a>
+        <a href="./profile.html">Profile</a>
+    </nav>
+</header>
+
+
+<main class="profile-page">
+
+    <h1 class="profile-title">My Profile</h1>
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+            👤
+        </div>
+
+        <h2 class="profile-name" id="profileName">
+            My Profile
+        </h2>
+
+
+        <form id="profileForm" class="profile-form">
+
+            <div class="profile-group">
+                <label for="profileFullName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="profileFullName"
+                    required
+                >
+            </div>
+
+
+            <div class="profile-group">
+                <label for="profileEmail">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="profileEmail"
+                    readonly
+                >
+            </div>
+
+
+            <div class="profile-group">
+                <label for="profilePhone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="profilePhone"
+                    placeholder="Enter phone number"
+                >
+            </div>
+
+
+            <div class="profile-group">
+                <label for="profileCity">
+                    City
+                </label>
+
+                <input
+                    type="text"
+                    id="profileCity"
+                    placeholder="Enter city"
+                >
+            </div>
+
+
+            <div class="profile-group full-width">
+                <label for="profileAddress">
+                    Address
+                </label>
+
+                <textarea
+                    id="profileAddress"
+                    placeholder="Enter your complete address"
+                ></textarea>
+            </div>
+
+
+            <button
+                type="submit"
+                class="save-profile-btn"
+            >
+                Save Profile
+            </button>
+
+        </form>
+
+
+        <p id="profileMessage"></p>
+
+
+        <div class="profile-actions">
+
+            <a href="./orders.html">
+                📦 Previous Orders
+            </a>
+
+            <a
+                href="./index.html"
+                class="secondary"
+            >
+                🏠 Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+    <p>© 2026 Arnaverse | Smart Online Bouquet Ordering</p>
+</footer>
+
+
+<script>
+
+    // ==========================================
+    // CHECK LOGIN
+    // ==========================================
+
+    const loggedIn =
+        localStorage.getItem("arnaverseLoggedIn");
+
+    if (loggedIn !== "true") {
+
+        alert("Please login first.");
+
+        window.location.href =
+            "login.html";
+    }
+
+
+    // ==========================================
+    // LOAD USER PROFILE
+    // ==========================================
+
+    const profileForm =
+        document.getElementById("profileForm");
+
+    const profileFullName =
+        document.getElementById("profileFullName");
+
+    const profileEmail =
+        document.getElementById("profileEmail");
+
+    const profilePhone =
+        document.getElementById("profilePhone");
+
+    const profileCity =
+        document.getElementById("profileCity");
+
+    const profileAddress =
+        document.getElementById("profileAddress");
+
+    const profileName =
+        document.getElementById("profileName");
+
+    const profileMessage =
+        document.getElementById("profileMessage");
+
+
+    let user =
+        JSON.parse(
+            localStorage.getItem("arnaverseUser")
+        );
+
+
+    if (!user) {
+
+        alert("User profile not found.");
+
+        window.location.href =
+            "register.html";
+
+    } else {
+
+        profileFullName.value =
+            user.name || "";
+
+        profileEmail.value =
+            user.email || "";
+
+        profilePhone.value =
+            user.phone || "";
+
+        profileCity.value =
+            user.city || "";
+
+        profileAddress.value =
+            user.address || "";
+
+        profileName.textContent =
+            user.name || "My Profile";
+    }
+
+
+    // ==========================================
+    // SAVE PROFILE
+    // ==========================================
+
+    profileForm.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            user.name =
+                profileFullName.value.trim();
+
+            user.phone =
+                profilePhone.value.trim();
+
+            user.city =
+                profileCity.value.trim();
+
+            user.address =
+                profileAddress.value.trim();
+
+
+            // Save updated user
+            localStorage.setItem(
+                "arnaverseUser",
+                JSON.stringify(user)
+            );
+
+
+            // Update current logged-in user
+            localStorage.setItem(
+                "arnaverseCurrentUser",
+                JSON.stringify(user)
+            );
+
+
+            profileName.textContent =
+                user.name || "My Profile";
+
+
+            profileMessage.textContent =
+                "✅ Profile updated successfully!";
+
+            profileMessage.style.color =
+                "green";
+
+
+            setTimeout(function() {
+
+                profileMessage.textContent = "";
+
+            }, 2500);
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

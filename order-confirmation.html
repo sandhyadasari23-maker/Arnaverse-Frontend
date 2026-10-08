@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Confirmation - Arnaverse</title>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        /* ==============================
+           PAGE
+        ============================== */
+
+        .confirmation-page {
+            min-height: 80vh;
+            padding: 60px 20px;
+            background: #fff9f5;
+        }
+
+        .confirmation-container {
+            max-width: 950px;
+            margin: auto;
+        }
+
+
+        /* ==============================
+           SUCCESS HEADER
+        ============================== */
+
+        .success-box {
+            text-align: center;
+            background: white;
+            border-radius: 22px;
+            padding: 45px 30px;
+            box-shadow: 0 10px 30px rgba(80, 35, 55, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #e8f7ed;
+            color: #2e8b57;
+
+            font-size: 38px;
+        }
+
+        .success-box h1 {
+            margin: 10px 0;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 42px;
+            color: #2d1d25;
+        }
+
+        .success-box p {
+            color: #806d73;
+            font-size: 17px;
+        }
+
+        .order-id {
+            margin-top: 18px;
+            color: #a8325d;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+
+        /* ==============================
+           ORDER CARD
+        ============================== */
+
+        .order-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(80, 35, 55, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .order-card h2 {
+            margin-top: 0;
+            margin-bottom: 22px;
+            color: #2d1d25;
+            font-size: 24px;
+        }
+
+
+        /* ==============================
+           DETAILS
+        ============================== */
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-box {
+            background: #fff9f5;
+            border: 1px solid #eadfe2;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .detail-box span {
+            display: block;
+            color: #806d73;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .detail-box strong {
+            color: #2d1d25;
+            font-size: 15px;
+        }
+
+
+        /* ==============================
+           ITEMS
+        ============================== */
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid #eee5e8;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 75px;
+            height: 75px;
+
+            border-radius: 12px;
+            overflow: hidden;
+
+            background: #fde6ef;
+
+            flex-shrink: 0;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-info h3 {
+            margin: 0 0 5px;
+            color: #2d1d25;
+            font-size: 17px;
+        }
+
+        .item-info p {
+            margin: 0;
+            color: #806d73;
+            font-size: 14px;
+        }
+
+        .item-price {
+            color: #a8325d;
+            font-weight: bold;
+        }
+
+
+        /* ==============================
+           PRICE SUMMARY
+        ============================== */
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 10px 0;
+
+            color: #806d73;
+        }
+
+        .price-total {
+            display: flex;
+            justify-content: space-between;
+
+            margin-top: 12px;
+            padding-top: 18px;
+
+            border-top: 1px solid #eadfe2;
+
+            font-size: 22px;
+            font-weight: bold;
+
+            color: #2d1d25;
+        }
+
+        .price-total strong {
+            color: #a8325d;
+        }
+
+
+        /* ==============================
+           STATUS
+        ============================== */
+
+        .status-box {
+            text-align: center;
+            background: #fff4f8;
+            border: 1px solid #f1d4df;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .status-box i {
+            color: #a8325d;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .status-box strong {
+            display: block;
+            color: #a8325d;
+            font-size: 18px;
+        }
+
+        .status-box span {
+            display: block;
+            margin-top: 5px;
+            color: #806d73;
+            font-size: 14px;
+        }
+
+
+        /* ==============================
+           BUTTONS
+        ============================== */
+
+        .confirmation-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .confirmation-buttons a {
+            text-decoration: none;
+            padding: 13px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-primary-confirm {
+            background: #b52f62;
+            color: white;
+        }
+
+        .btn-primary-confirm:hover {
+            background: #96244f;
+        }
+
+        .btn-secondary-confirm {
+            background: #f3d5e1;
+            color: #a8325d;
+        }
+
+        .btn-secondary-confirm:hover {
+            background: #edc2d3;
+        }
+
+
+        /* ==============================
+           EMPTY / NO ORDER
+        ============================== */
+
+        .no-order {
+            text-align: center;
+            background: white;
+            border-radius: 20px;
+            padding: 50px 30px;
+            box-shadow: 0 10px 30px rgba(80, 35, 55, 0.08);
+        }
+
+        .no-order h2 {
+            color: #2d1d25;
+        }
+
+        .no-order p {
+            color: #806d73;
+        }
+
+        .no-order a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 13px 25px;
+            border-radius: 30px;
+            background: #b52f62;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 650px) {
+
+            .confirmation-page {
+                padding: 40px 15px;
+            }
+
+            .success-box {
+                padding: 35px 20px;
+            }
+
+            .success-box h1 {
+                font-size: 32px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .order-card {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==============================
+     HEADER
+============================== -->
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a href="./index.html" class="logo">
+
+            <span class="logo-icon">
+                ✿
+            </span>
+
+            <span>
+                Arna<span>verse</span>
+            </span>
+
+        </a>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="./index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="./shop.html">
+                    Shop
+                </a>
+            </li>
+
+            <li>
+                <a href="./customize.html">
+                    Customize
+                </a>
+            </li>
+
+            <li>
+                <a href="./orders.html">
+                    My Orders
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="nav-actions">
+
+            <a href="./cart.html" class="cart-btn">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                <span class="cart-count">
+                    0
+                </span>
+
+            </a>
+
+            <a href="./profile.html" class="login-btn">
+                Profile
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ==============================
+     CONFIRMATION PAGE
+============================== -->
+
+<main class="confirmation-page">
+
+    <div class="confirmation-container">
+
+        <div id="confirmationContent">
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- ==============================
+     FOOTER
+============================== -->
+
+<footer class="footer">
+
+    <div class="footer-bottom">
+
+        © 2026 Arnaverse |
+        Smart Online Bouquet Ordering
+
+    </div>
+
+</footer>
+
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* ==============================
+           GET ORDER
+        ============================== */
+
+        let order = null;
+
+        try {
+
+            order =
+                JSON.parse(
+                    localStorage.getItem(
+                        "arnaverseOrder"
+                    )
+                );
+
+        } catch (error) {
+
+            order = null;
+
+        }
+
+
+        const container =
+            document.getElementById(
+                "confirmationContent"
+            );
+
+
+        /* ==============================
+           NO ORDER
+        ============================== */
+
+        if (!order) {
+
+            container.innerHTML = `
+
+                <div class="no-order">
+
+                    <h2>
+                        No Order Found
+                    </h2>
+
+                    <p>
+                        Please place an order first.
+                    </p>
+
+                    <a href="./shop.html">
+                        Browse Bouquets
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        /* ==============================
+           ORDER ITEMS
+        ============================== */
+
+        let itemsHTML = "";
+
+
+        if (
+            Array.isArray(order.items)
+        ) {
+
+            order.items.forEach(
+                function (item) {
+
+                    const quantity =
+                        Number(
+                            item.quantity
+                        ) || 1;
+
+                    const price =
+                        Number(
+                            item.price
+                        ) || 0;
+
+                    const itemTotal =
+                        price * quantity;
+
+
+                    const image =
+                        item.image ||
+                        "assets/images/bouquets/purple-mixed-bouquet.jpeg";
+
+
+                    itemsHTML += `
+
+                        <div class="order-item">
+
+                            <div class="item-image">
+
+                                <img
+                                    src="${image}"
+                                    alt="${item.name || "Bouquet"}"
+                                    onerror="
+                                        this.onerror=null;
+                                        this.src='assets/images/bouquets/purple-mixed-bouquet.jpeg';
+                                    "
+                                >
+
+                            </div>
+
+
+                            <div class="item-info">
+
+                                <h3>
+                                    ${item.name || "Bouquet"}
+                                </h3>
+
+                                <p>
+                                    Quantity: ${quantity}
+                                </p>
+
+                            </div>
+
+
+                            <div class="item-price">
+
+                                ₹${itemTotal}
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+        }
+
+
+        /* ==============================
+           PAYMENT TEXT
+        ============================== */
+
+        let paymentText =
+            order.paymentMethod || "COD";
+
+
+        if (
+            paymentText === "COD"
+        ) {
+
+            paymentText =
+                "Cash on Delivery";
+
+        }
+
+
+        if (
+            paymentText === "UPI"
+        ) {
+
+            paymentText =
+                "UPI Payment";
+
+        }
+
+
+        /* ==============================
+           DISPLAY
+        ============================== */
+
+        container.innerHTML = `
+
+            <!-- SUCCESS -->
+
+            <section class="success-box">
+
+                <div class="success-icon">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+
+                <h1>
+                    Order Placed Successfully!
+                </h1>
+
+
+                <p>
+                    Thank you for ordering from Arnaverse.
+                </p>
+
+
+                <div class="order-id">
+
+                    Order ID:
+                    ${order.orderId}
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ORDER STATUS -->
+
+            <section class="order-card">
+
+                <div class="status-box">
+
+                    <i class="fa-solid fa-box-open"></i>
+
+                    <strong>
+                        ${order.status || "Order Placed"}
+                    </strong>
+
+                    <span>
+                        Your bouquet order has been received successfully.
+                    </span>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- CUSTOMER DETAILS -->
+
+            <section class="order-card">
+
+                <h2>
+                    Delivery Details
+                </h2>
+
+
+                <div class="details-grid">
+
+                    <div class="detail-box">
+
+                        <span>
+                            Full Name
+                        </span>
+
+                        <strong>
+                            ${order.name || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            Phone Number
+                        </span>
+
+                        <strong>
+                            ${order.phone || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            Address
+                        </span>
+
+                        <strong>
+                            ${order.address || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            City
+                        </span>
+
+                        <strong>
+                            ${order.city || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            Pincode
+                        </span>
+
+                        <strong>
+                            ${order.pincode || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span>
+                            Payment Method
+                        </span>
+
+                        <strong>
+                            ${paymentText}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ORDER ITEMS -->
+
+            <section class="order-card">
+
+                <h2>
+                    Ordered Bouquets
+                </h2>
+
+
+                ${itemsHTML}
+
+            </section>
+
+
+
+            <!-- SUMMARY -->
+
+            <section class="order-card">
+
+                <h2>
+                    Order Summary
+                </h2>
+
+
+                <div class="price-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+                        ₹${order.subtotal || 0}
+                    </strong>
+
+                </div>
+
+
+                <div class="price-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong>
+                        ₹${order.delivery || 50}
+                    </strong>
+
+                </div>
+
+
+                <div class="price-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ₹${order.total || 0}
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- BUTTONS -->
+
+            <div class="confirmation-buttons">
+
+                <a
+                    href="./orders.html"
+                    class="btn-primary-confirm"
+                >
+                    <i class="fa-solid fa-box"></i>
+                    My Orders
+                </a>
+
+
+                <a
+                    href="./order-tracking.html?orderId=${order.orderId}"
+                    class="btn-primary-confirm"
+                >
+                    <i class="fa-solid fa-location-dot"></i>
+                    Track Order
+                </a>
+
+
+                <a
+                    href="./shop.html"
+                    class="btn-secondary-confirm"
+                >
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    Continue Shopping
+                </a>
+
+            </div>
+
+        `;
+
+
+        /* ==============================
+           CART COUNT
+        ============================== */
+
+        let cart = [];
+
+        try {
+
+            cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "arnaverseCart"
+                    )
+                ) || [];
+
+        } catch (error) {
+
+            cart = [];
+
+        }
+
+
+        const cartCount =
+            document.querySelector(
+                ".cart-count"
+            );
+
+
+        if (cartCount) {
+
+            const count =
+                cart.reduce(
+                    function (total, item) {
+
+                        return total +
+                            (
+                                Number(
+                                    item.quantity
+                                ) || 1
+                            );
+
+                    },
+                    0
+                );
+
+
+            cartCount.textContent =
+                count;
+
+        }
+
+    }
+
+);
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Order Tracking - Arnaverse</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/style.css"
+    >
+
+    <style>
+
+        .tracking-page {
+            min-height: 80vh;
+            padding: 60px 20px;
+            background: #fff9f5;
+        }
+
+        .tracking-container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .tracking-heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tracking-heading .tag {
+            display: inline-block;
+            background: #3f6edb;
+            color: white;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .tracking-heading h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 48px;
+            color: #2d1d25;
+            margin: 18px 0 10px;
+        }
+
+        .tracking-heading p {
+            color: #806d73;
+        }
+
+        .tracking-box {
+            background: white;
+            border: 1px solid #eadfe2;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(80, 35, 55, 0.08);
+        }
+
+        .order-info {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-info h2 {
+            color: #a8325d;
+            margin-bottom: 8px;
+        }
+
+        .order-info p {
+            color: #806d73;
+        }
+
+        .tracking-list {
+            margin-top: 35px;
+        }
+
+        .tracking-step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            padding-bottom: 35px;
+        }
+
+        .tracking-step:last-child {
+            padding-bottom: 0;
+        }
+
+        .step-circle {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eadfe2;
+            color: #806d73;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tracking-step.completed .step-circle {
+            background: #b52f62;
+            color: white;
+        }
+
+        .tracking-step.current .step-circle {
+            background: #3f6edb;
+            color: white;
+        }
+
+        .step-content h3 {
+            margin: 0 0 5px;
+            color: #2d1d25;
+        }
+
+        .step-content p {
+            margin: 0;
+            color: #806d73;
+            font-size: 14px;
+        }
+
+        .tracking-step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            left: 23px;
+            top: 48px;
+            width: 2px;
+            height: 35px;
+            background: #eadfe2;
+        }
+
+        .tracking-step.completed:not(:last-child)::after {
+            background: #b52f62;
+        }
+
+        .cancel-button {
+            display: block;
+            width: 100%;
+            margin-top: 35px;
+            padding: 14px;
+            border: 1px solid #d9534f;
+            border-radius: 30px;
+            background: white;
+            color: #d9534f;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cancel-button:hover {
+            background: #fde8e8;
+        }
+
+        .orders-button {
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+            padding: 14px;
+            border: none;
+            border-radius: 30px;
+            background: #b52f62;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        .orders-button:hover {
+            background: #96264f;
+        }
+
+        .no-order {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .no-order h2 {
+            color: #2d1d25;
+        }
+
+        .no-order p {
+            color: #806d73;
+        }
+
+        .no-order a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 13px 25px;
+            border-radius: 30px;
+            background: #b52f62;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .order-items {
+            margin-top: 25px;
+            padding: 20px;
+            background: #fff9f5;
+            border-radius: 12px;
+        }
+
+        .order-items h3 {
+            margin: 0 0 15px;
+            color: #2d1d25;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 8px 0;
+            color: #806d73;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #eadfe2;
+            font-weight: bold;
+            color: #a8325d;
+        }
+
+        .cancelled-message {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #fde8e8;
+            color: #d9534f;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+
+            .tracking-box {
+                padding: 25px 20px;
+            }
+
+            .tracking-heading h1 {
+                font-size: 36px;
+            }
+
+            .tracking-step {
+                gap: 15px;
+            }
+
+            .order-item {
+                flex-direction: column;
+                gap: 3px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a
+            href="./index.html"
+            class="logo"
+        >
+
+            <span class="logo-icon">
+                ✿
+            </span>
+
+            <span>
+                Arna<span>verse</span>
+            </span>
+
+        </a>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="./index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="./index.html#bouquets">
+                    Bouquets
+                </a>
+            </li>
+
+            <li>
+                <a href="./customize.html">
+                    Customize
+                </a>
+            </li>
+
+            <li>
+                <a href="./orders.html">
+                    My Orders
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href="./order-tracking.html"
+                    class="active"
+                >
+                    Tracking
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="nav-actions">
+
+            <a
+                href="./cart.html"
+                class="cart-btn"
+            >
+                🛍️
+            </a>
+
+            <a
+                href="./login.html"
+                class="login-btn"
+            >
+                Login
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main class="tracking-page">
+
+    <div class="tracking-container">
+
+
+        <div class="tracking-heading">
+
+            <span class="tag">
+                ORDER STATUS
+            </span>
+
+            <h1>
+                Track Your Order
+            </h1>
+
+            <p>
+                Follow your bouquet from preparation to delivery.
+            </p>
+
+        </div>
+
+
+        <div id="trackingContainer"></div>
+
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="footer-bottom">
+        © 2026 Arnaverse | Smart Online Bouquet Ordering
+    </div>
+
+</footer>
+
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        const container =
+            document.getElementById(
+                "trackingContainer"
+            );
+
+
+        /* ==========================================
+           GET ORDER ID FROM URL
+           ========================================== */
+
+        const urlParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const selectedOrderId =
+            urlParams.get("orderId");
+
+
+        /* ==========================================
+           GET ALL ORDERS
+           ========================================== */
+
+        let orders = [];
+
+
+        try {
+
+            orders =
+                JSON.parse(
+                    localStorage.getItem(
+                        "arnaverseOrders"
+                    )
+                ) || [];
+
+        } catch (error) {
+
+            orders = [];
+
+        }
+
+
+        /* ==========================================
+           BACKWARD COMPATIBILITY
+           ========================================== */
+
+        if (
+            orders.length === 0 &&
+            localStorage.getItem(
+                "arnaverseOrder"
+            )
+        ) {
+
+            try {
+
+                const oldOrder =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "arnaverseOrder"
+                        )
+                    );
+
+
+                if (oldOrder) {
+
+                    orders = [oldOrder];
+
+                }
+
+            } catch (error) {
+
+                orders = [];
+
+            }
+
+        }
+
+
+        /* ==========================================
+           FIND SELECTED ORDER
+           ========================================== */
+
+        let order = null;
+
+
+        if (selectedOrderId) {
+
+            order =
+                orders.find(
+                    function (item) {
+
+                        return (
+                            item.orderId ===
+                            selectedOrderId
+                        );
+
+                    }
+                ) || null;
+
+        }
+
+
+        /*
+           If no orderId was provided,
+           use the latest order.
+        */
+
+        if (
+            !order &&
+            !selectedOrderId &&
+            orders.length > 0
+        ) {
+
+            order = orders[0];
+
+        }
+
+
+        /* ==========================================
+           NO ORDER FOUND
+           ========================================== */
+
+        if (!order) {
+
+            container.innerHTML = `
+
+                <div class="tracking-box no-order">
+
+                    <h2>
+                        Order Not Found
+                    </h2>
+
+                    <p>
+                        The selected order could not be found.
+                    </p>
+
+                    <a
+                        href="./orders.html"
+                    >
+                        View My Orders
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        /* ==========================================
+           ORDER STATUS
+           ========================================== */
+
+        const status =
+            order.status ||
+            "Order Placed";
+
+
+        /* ==========================================
+           CANCELLED ORDER
+           ========================================== */
+
+        if (
+            status === "Cancelled"
+        ) {
+
+            container.innerHTML = `
+
+                <div class="tracking-box">
+
+
+                    <div class="order-info">
+
+                        <h2>
+                            Order #${order.orderId}
+                        </h2>
+
+                        <p>
+                            Current Status:
+
+                            <strong
+                                style="color:#d9534f;"
+                            >
+                                Cancelled
+                            </strong>
+                        </p>
+
+                    </div>
+
+
+                    <div class="order-items">
+
+                        <h3>
+                            Order Details
+                        </h3>
+
+                        ${getOrderItemsHTML(order)}
+
+                        <div class="order-total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <span>
+                                ₹${Number(order.total || 0)}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tracking-list">
+
+                        <div class="tracking-step">
+
+                            <div
+                                class="step-circle"
+                                style="
+                                    background:#d9534f;
+                                    color:white;
+                                "
+                            >
+                                ✕
+                            </div>
+
+                            <div class="step-content">
+
+                                <h3>
+                                    Cancelled
+                                </h3>
+
+                                <p>
+                                    This order has been cancelled.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="cancelled-message">
+
+                        ❌ Your order has been cancelled successfully.
+
+                    </div>
+
+
+                    <a
+                        href="./orders.html"
+                        class="orders-button"
+                    >
+                        View My Orders
+                    </a>
+
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        /* ==========================================
+           NORMAL STATUS
+           ========================================== */
+
+        const statuses = [
+
+            "Order Placed",
+
+            "Preparing",
+
+            "Out for Delivery",
+
+            "Delivered"
+
+        ];
+
+
+        let currentIndex =
+            statuses.indexOf(status);
+
+
+        if (
+            currentIndex === -1
+        ) {
+
+            currentIndex = 0;
+
+        }
+
+
+        let stepsHTML = "";
+
+
+        statuses.forEach(
+            function (item, index) {
+
+
+                let className = "";
+
+
+                if (
+                    index < currentIndex
+                ) {
+
+                    className =
+                        "completed";
+
+                }
+
+
+                if (
+                    index === currentIndex
+                ) {
+
+                    className =
+                        "current";
+
+                }
+
+
+                const icon =
+                    index <= currentIndex
+                    ? "✓"
+                    : index + 1;
+
+
+                let description = "";
+
+
+                if (
+                    item === "Order Placed"
+                ) {
+
+                    description =
+                        "Your order has been successfully placed.";
+
+                }
+
+                else if (
+                    item === "Preparing"
+                ) {
+
+                    description =
+                        "Your beautiful bouquet is being prepared.";
+
+                }
+
+                else if (
+                    item === "Out for Delivery"
+                ) {
+
+                    description =
+                        "Your bouquet is on the way.";
+
+                }
+
+                else {
+
+                    description =
+                        "Your bouquet has been delivered.";
+
+                }
+
+
+                stepsHTML += `
+
+                    <div
+                        class="tracking-step ${className}"
+                    >
+
+                        <div class="step-circle">
+
+                            ${icon}
+
+                        </div>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                ${item}
+                            </h3>
+
+                            <p>
+                                ${description}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        /* ==========================================
+           DISPLAY TRACKING PAGE
+           ========================================== */
+
+        container.innerHTML = `
+
+            <div class="tracking-box">
+
+
+                <div class="order-info">
+
+                    <h2>
+                        Order #${order.orderId}
+                    </h2>
+
+                    <p>
+
+                        Current Status:
+
+                        <strong>
+                            ${status}
+                        </strong>
+
+                    </p>
+
+                </div>
+
+
+                <div class="order-items">
+
+                    <h3>
+                        Order Details
+                    </h3>
+
+                    ${getOrderItemsHTML(order)}
+
+                    <div class="order-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <span>
+                            ₹${Number(order.total || 0)}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="tracking-list">
+
+                    ${stepsHTML}
+
+                </div>
+
+
+                ${
+                    status !== "Delivered"
+                    ?
+
+                    `
+                        <button
+                            class="cancel-button"
+                            id="cancelOrderBtn"
+                        >
+                            ❌ Cancel Order
+                        </button>
+                    `
+
+                    :
+
+                    ""
+                }
+
+
+                <a
+                    href="./orders.html"
+                    class="orders-button"
+                >
+                    View My Orders
+                </a>
+
+
+            </div>
+
+        `;
+
+
+        /* ==========================================
+           CANCEL ORDER
+           ========================================== */
+
+        const cancelButton =
+            document.getElementById(
+                "cancelOrderBtn"
+            );
+
+
+        if (cancelButton) {
+
+
+            cancelButton.addEventListener(
+                "click",
+                function () {
+
+
+                    const confirmCancel =
+                        confirm(
+                            "Are you sure you want to cancel this order?"
+                        );
+
+
+                    if (
+                        !confirmCancel
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    /* ==============================
+                       UPDATE SELECTED ORDER
+                       ============================== */
+
+                    orders =
+                        orders.map(
+                            function (item) {
+
+                                if (
+                                    item.orderId ===
+                                    order.orderId
+                                ) {
+
+                                    item.status =
+                                        "Cancelled";
+
+                                }
+
+                                return item;
+
+                            }
+                        );
+
+
+                    /* ==============================
+                       SAVE ALL ORDERS
+                       ============================== */
+
+                    localStorage.setItem(
+                        "arnaverseOrders",
+                        JSON.stringify(
+                            orders
+                        )
+                    );
+
+
+                    /* ==============================
+                       UPDATE OLD SINGLE ORDER
+                       ============================== */
+
+                    try {
+
+                        const oldOrder =
+                            JSON.parse(
+                                localStorage.getItem(
+                                    "arnaverseOrder"
+                                )
+                            );
+
+
+                        if (
+                            oldOrder &&
+                            oldOrder.orderId ===
+                            order.orderId
+                        ) {
+
+                            oldOrder.status =
+                                "Cancelled";
+
+
+                            localStorage.setItem(
+                                "arnaverseOrder",
+                                JSON.stringify(
+                                    oldOrder
+                                )
+                            );
+
+                        }
+
+                    } catch (error) {
+
+                        console.log(
+                            "Old order update skipped."
+                        );
+
+                    }
+
+
+                    alert(
+                        "Your order has been cancelled."
+                    );
+
+
+                    /* ==============================
+                       RELOAD SAME TRACKING PAGE
+                       ============================== */
+
+                    window.location.reload();
+
+                }
+            );
+
+        }
+
+
+    }
+);
+
+
+/* ==========================================
+   ORDER ITEMS FUNCTION
+   ========================================== */
+
+function getOrderItemsHTML(order) {
+
+    let html = "";
+
+
+    if (
+        Array.isArray(order.items) &&
+        order.items.length > 0
+    ) {
+
+
+        order.items.forEach(
+            function (item) {
+
+
+                const name =
+                    item.name ||
+                    item.title ||
+                    "Bouquet";
+
+
+                const quantity =
+                    item.quantity ||
+                    1;
+
+
+                const price =
+                    Number(
+                        item.price || 0
+                    );
+
+
+                html += `
+
+                    <div class="order-item">
+
+                        <span>
+                            ${name} × ${quantity}
+                        </span>
+
+                        <strong>
+                            ₹${price * quantity}
+                        </strong>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+    }
+
+    else {
+
+
+        html = `
+
+            <div class="order-item">
+
+                <span>
+                    Bouquet
+                </span>
+
+                <strong>
+                    ₹${Number(order.subtotal || 0)}
+                </strong>
+
+            </div>
+
+        `;
+
+    }
+
+
+    return html;
+
+}
+
+</script>
+
+
+</body>
+
+</html>

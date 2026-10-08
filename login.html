@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Arnaverse</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: #fff8fb;
+            color: #211b2b;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #f1dce5;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: auto;
+            min-height: 78px;
+            padding: 0 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            color: #a8325d;
+
+            font-family: "Playfair Display", serif;
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            font-size: 31px;
+            color: #c22f63;
+        }
+
+        .logo span span {
+            color: #211b2b;
+        }
+
+
+        /* NAV LINKS */
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #3b3140;
+            font-size: 15px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #a8325d;
+        }
+
+
+        /* NAV ACTIONS */
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cart-btn {
+            position: relative;
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #a8325d;
+            background: #fff0f5;
+            border-radius: 50%;
+
+            font-size: 17px;
+        }
+
+        .cart-count {
+            position: absolute;
+
+            top: -5px;
+            right: -5px;
+
+            min-width: 19px;
+            height: 19px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #a8325d;
+            color: white;
+
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .login-nav-btn {
+            background: #a8325d;
+            color: white;
+
+            padding: 10px 20px;
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           LOGIN PAGE
+        ========================================= */
+
+        .login-page {
+            min-height: calc(100vh - 78px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 55px 20px;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 1050px;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            background: white;
+
+            border-radius: 24px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 15px 45px rgba(93, 35, 61, 0.12);
+        }
+
+
+        /* =========================================
+           LEFT SIDE
+        ========================================= */
+
+        .login-intro {
+            background:
+                linear-gradient(
+                    145deg,
+                    #a8325d,
+                    #c94d78
+                );
+
+            color: white;
+
+            padding: 55px 45px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .intro-flower {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .login-intro h1 {
+            font-family: "Playfair Display", serif;
+            font-size: 43px;
+            line-height: 1.15;
+            margin-bottom: 18px;
+        }
+
+        .login-intro h1 em {
+            font-weight: 600;
+        }
+
+        .login-intro p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #fff1f6;
+            max-width: 390px;
+        }
+
+        .intro-features {
+            margin-top: 30px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .intro-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 14px;
+        }
+
+        .intro-feature i {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,0.18);
+            border-radius: 50%;
+        }
+
+
+        /* =========================================
+           RIGHT LOGIN CARD
+        ========================================= */
+
+        .login-card {
+            padding: 48px 45px;
+            background: #ffffff;
+        }
+
+        .login-heading {
+            margin-bottom: 28px;
+        }
+
+        .login-heading .eyebrow {
+            color: #a8325d;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .login-heading h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 34px;
+            color: #211b2b;
+            margin-bottom: 8px;
+        }
+
+        .login-heading p {
+            color: #777;
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           LOGIN TYPE
+        ========================================= */
+
+        .login-type-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #3a3039;
+
+            margin-bottom: 10px;
+        }
+
+        .login-type {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+
+            margin-bottom: 24px;
+        }
+
+        .type-option {
+            position: relative;
+        }
+
+        .type-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .type-label {
+            min-height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            border: 1.5px solid #ead4de;
+            border-radius: 11px;
+
+            background: #fffafd;
+
+            color: #514651;
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .type-label i {
+            color: #a8325d;
+            font-size: 16px;
+        }
+
+        .type-option input:checked + .type-label {
+            border-color: #a8325d;
+            background: #fff0f5;
+            color: #a8325d;
+            box-shadow: 0 3px 10px rgba(168,50,93,0.08);
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            margin-bottom: 8px;
+            color: #332934;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+
+            left: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #a8325d;
+        }
+
+        .form-group input {
+            width: 100%;
+
+            height: 48px;
+
+            border: 1px solid #decbd4;
+            border-radius: 9px;
+
+            padding: 0 15px 0 44px;
+
+            font-family: "DM Sans", sans-serif;
+            font-size: 14px;
+
+            outline: none;
+
+            background: #fff;
+        }
+
+        .form-group input:focus {
+            border-color: #a8325d;
+
+            box-shadow:
+                0 0 0 3px rgba(168,50,93,0.09);
+        }
+
+
+        /* PASSWORD */
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 45px;
+        }
+
+        .show-password {
+            position: absolute;
+
+            right: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+            background: transparent;
+
+            color: #777;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================================
+           LOGIN BUTTON
+        ========================================= */
+
+        .login-submit {
+            width: 100%;
+            height: 50px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: #a8325d;
+            color: white;
+
+            font-family: "DM Sans", sans-serif;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            transition: 0.2s;
+        }
+
+        .login-submit:hover {
+            background: #8d284d;
+            transform: translateY(-1px);
+        }
+
+        .login-submit i {
+            margin-left: 7px;
+        }
+
+
+        /* =========================================
+           MESSAGE
+        ========================================= */
+
+        #loginMessage {
+            min-height: 22px;
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           REGISTER
+        ========================================= */
+
+        .register-text {
+            text-align: center;
+
+            margin-top: 22px;
+
+            font-size: 14px;
+            color: #666;
+        }
+
+        .register-text a {
+            color: #a8325d;
+            font-weight: 700;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .footer {
+            background: #2b2029;
+            color: white;
+
+            padding: 25px 20px;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            .navbar {
+                padding: 0 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .login-wrapper {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+
+            .login-intro {
+                padding: 35px;
+            }
+
+            .login-intro h1 {
+                font-size: 35px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .login-page {
+                padding: 25px 12px;
+            }
+
+            .login-card {
+                padding: 32px 22px;
+            }
+
+            .login-intro {
+                padding: 30px 22px;
+            }
+
+            .login-intro h1 {
+                font-size: 30px;
+            }
+
+            .logo {
+                font-size: 25px;
+            }
+
+            .login-nav-btn {
+                display: none;
+            }
+
+            .login-type {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+
+            <span class="logo-icon">✿</span>
+
+            <span>
+                Arna<span>verse</span>
+            </span>
+
+        </a>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="shop.html">
+                    Shop
+                </a>
+            </li>
+
+            <li>
+                <a href="customize.html">
+                    Customize
+                </a>
+            </li>
+
+            <li>
+                <a href="ai-recommendation.html">
+                    AI Picks
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="nav-actions">
+
+            <a href="cart.html" class="cart-btn">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                <span
+                    class="cart-count"
+                    id="cartCount">
+                    0
+                </span>
+
+            </a>
+
+            <a
+                href="login.html"
+                class="login-nav-btn">
+                Login
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================================
+     LOGIN PAGE
+========================================= -->
+
+<main class="login-page">
+
+    <div class="login-wrapper">
+
+
+        <!-- LEFT INTRO -->
+
+        <section class="login-intro">
+
+            <div class="intro-flower">
+                🌸
+            </div>
+
+            <h1>
+                Welcome Back
+                <br>
+                <em>to Arnaverse</em>
+            </h1>
+
+            <p>
+                Login to your Arnaverse account and
+                continue your beautiful bouquet shopping
+                experience.
+            </p>
+
+
+            <div class="intro-features">
+
+                <div class="intro-feature">
+
+                    <i class="fa-solid fa-flower"></i>
+
+                    <span>
+                        Explore beautiful bouquets
+                    </span>
+
+                </div>
+
+
+                <div class="intro-feature">
+
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                    <span>
+                        Customize your bouquet
+                    </span>
+
+                </div>
+
+
+                <div class="intro-feature">
+
+                    <i class="fa-solid fa-truck"></i>
+
+                    <span>
+                        Track your orders easily
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- LOGIN CARD -->
+
+        <section class="login-card">
+
+
+            <div class="login-heading">
+
+                <p class="eyebrow">
+                    ARNAVERSE ACCOUNT
+                </p>
+
+                <h2>
+                    Sign In
+                </h2>
+
+                <p>
+                    Login to continue to your account.
+                </p>
+
+            </div>
+
+
+
+            <!-- LOGIN TYPE -->
+
+            <p class="login-type-title">
+                Login As
+            </p>
+
+
+            <div class="login-type">
+
+
+                <div class="type-option">
+
+                    <input
+                        type="radio"
+                        id="userLogin"
+                        name="loginType"
+                        value="user"
+                        checked
+                    >
+
+                    <label
+                        for="userLogin"
+                        class="type-label">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        User
+
+                    </label>
+
+                </div>
+
+
+
+                <div class="type-option">
+
+                    <input
+                        type="radio"
+                        id="adminLogin"
+                        name="loginType"
+                        value="admin"
+                    >
+
+                    <label
+                        for="adminLogin"
+                        class="type-label">
+
+                        <i class="fa-solid fa-user-shield"></i>
+
+                        Admin
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        id="showPassword"
+                        aria-label="Show password">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="button"
+                class="login-submit"
+                id="loginBtn">
+
+                Login
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <!-- MESSAGE -->
+
+            <p id="loginMessage"></p>
+
+
+
+            <!-- REGISTER -->
+
+            <p class="register-text">
+
+                Don't have an account?
+
+                <a href="register.html">
+                    Register here
+                </a>
+
+            </p>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 Arnaverse | Smart Online Bouquet Ordering
+    </p>
+
+</footer>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+/* =========================================
+   CART COUNT
+========================================= */
+
+function updateCartCount() {
+
+    const cart =
+        JSON.parse(
+            localStorage.getItem("arnaverseCart")
+        ) || [];
+
+    let total = 0;
+
+    cart.forEach(function(item) {
+
+        total += Number(
+            item.quantity || 0
+        );
+
+    });
+
+    const cartCount =
+        document.getElementById("cartCount");
+
+    if (cartCount) {
+
+        cartCount.textContent = total;
+
+    }
+
+}
+
+updateCartCount();
+
+
+
+/* =========================================
+   SHOW / HIDE PASSWORD
+========================================= */
+
+const showPassword =
+    document.getElementById("showPassword");
+
+const password =
+    document.getElementById("password");
+
+
+showPassword.addEventListener(
+    "click",
+    function() {
+
+        if (password.type === "password") {
+
+            password.type = "text";
+
+            showPassword.innerHTML =
+                '<i class="fa-solid fa-eye-slash"></i>';
+
+        } else {
+
+            password.type = "password";
+
+            showPassword.innerHTML =
+                '<i class="fa-solid fa-eye"></i>';
+
+        }
+
+    }
+);
+
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+document
+    .getElementById("loginBtn")
+    .addEventListener("click", function() {
+
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const passwordValue =
+            document
+                .getElementById("password")
+                .value;
+
+
+        const loginType =
+            document
+                .querySelector(
+                    'input[name="loginType"]:checked'
+                )
+                .value;
+
+
+        const message =
+            document.getElementById(
+                "loginMessage"
+            );
+
+
+        message.textContent = "";
+
+
+
+        /* =====================================
+           VALIDATION
+        ===================================== */
+
+        if (!email || !passwordValue) {
+
+            message.textContent =
+                "⚠️ Please enter email and password.";
+
+            message.style.color = "#c62828";
+
+            return;
+
+        }
+
+
+
+        /* =====================================
+           ADMIN LOGIN
+        ===================================== */
+
+        if (loginType === "admin") {
+
+
+            const adminEmail =
+                "admin@arnaverse.com";
+
+
+            const adminPassword =
+                "admin123";
+
+
+            if (
+                email === adminEmail &&
+                passwordValue === adminPassword
+            ) {
+
+
+                localStorage.setItem(
+                    "arnaverseAdminLoggedIn",
+                    "true"
+                );
+
+
+                localStorage.setItem(
+                    "arnaverseAdmin",
+                    JSON.stringify({
+                        email: adminEmail,
+                        role: "admin"
+                    })
+                );
+
+
+                message.textContent =
+                    "✅ Admin login successful!";
+
+
+                message.style.color =
+                    "#198754";
+
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "admin-dashboard.html";
+
+                }, 600);
+
+
+            } else {
+
+
+                message.textContent =
+                    "❌ Invalid admin email or password.";
+
+                message.style.color =
+                    "#c62828";
+
+            }
+
+
+            return;
+
+        }
+
+
+
+        /* =====================================
+           USER LOGIN
+        ===================================== */
+
+        const savedUser =
+            JSON.parse(
+                localStorage.getItem(
+                    "arnaverseUser"
+                )
+            );
+
+
+        if (!savedUser) {
+
+            message.textContent =
+                "❌ Please register first.";
+
+            message.style.color =
+                "#c62828";
+
+            return;
+
+        }
+
+
+        if (
+            savedUser.email.toLowerCase() !== email ||
+            savedUser.password !== passwordValue
+        ) {
+
+            message.textContent =
+                "❌ Invalid email or password.";
+
+            message.style.color =
+                "#c62828";
+
+            return;
+
+        }
+
+
+
+        /* =====================================
+           USER LOGIN SUCCESS
+        ===================================== */
+
+        localStorage.setItem(
+            "arnaverseLoggedIn",
+            "true"
+        );
+
+
+        localStorage.setItem(
+            "arnaverseCurrentUser",
+            JSON.stringify(savedUser)
+        );
+
+
+        message.textContent =
+            "✅ Login successful!";
+
+        message.style.color =
+            "#198754";
+
+
+        setTimeout(function() {
+
+            window.location.href =
+                "index.html";
+
+        }, 600);
+
+    });
+
+
+
+/* =========================================
+   ENTER KEY LOGIN
+========================================= */
+
+document
+    .getElementById("password")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                document
+                    .getElementById("loginBtn")
+                    .click();
+
+            }
+
+        }
+    );
+
+
+
+/* =========================================
+   STORAGE CART UPDATE
+========================================= */
+
+window.addEventListener(
+    "storage",
+    updateCartCount
+);
+
+</script>
+
+</body>
+</html>

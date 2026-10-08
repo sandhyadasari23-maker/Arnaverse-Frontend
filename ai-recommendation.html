@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Bouquet Recommendation - Arnaverse</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+
+        body {
+            margin: 0;
+            background: #fff8fb;
+            font-family: "DM Sans", Arial, sans-serif;
+        }
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .ai-page {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .ai-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .ai-icon {
+            font-size: 50px;
+        }
+
+        .ai-header h1 {
+            color: #a8325d;
+            margin: 10px 0;
+            font-family: "Playfair Display", serif;
+            font-size: 42px;
+        }
+
+        .ai-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* =========================
+           RECOMMENDATION BOX
+        ========================= */
+
+        .recommendation-box {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .recommendation-box h2 {
+            color: #a8325d;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .form-group select {
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: #a8325d;
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .recommend-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #b12f60;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .recommend-btn:hover {
+            background: #8d284d;
+        }
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        #recommendationMessage {
+            text-align: center;
+            margin: 25px 0;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        /* =========================
+           RESULT TITLE
+        ========================= */
+
+        .results-title {
+            color: #a8325d;
+            margin-bottom: 20px;
+            font-size: 30px;
+        }
+
+        /* =========================
+           RESULT GRID
+        ========================= */
+
+        .recommendations {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        /* =========================
+           BOUQUET CARD
+        ========================= */
+
+        .bouquet-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: 0.3s ease;
+        }
+
+        .bouquet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        /* =========================
+           ACTUAL IMAGE
+        ========================= */
+
+        .bouquet-image {
+            width: 100%;
+            height: 225px;
+            background: #fde6ef;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .bouquet-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* =========================
+           CARD TEXT
+        ========================= */
+
+        .bouquet-card h3 {
+            color: #a8325d;
+            margin: 8px 0;
+            font-size: 22px;
+        }
+
+        .bouquet-price {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 8px 0;
+            color: #222;
+        }
+
+        .bouquet-details {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           VIEW BUTTON
+        ========================= */
+
+        .select-bouquet-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: #a8325d;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 18px;
+            font-weight: 600;
+        }
+
+        .select-bouquet-btn:hover {
+            background: #8d284d;
+        }
+
+        /* =========================
+           BOTTOM LINKS
+        ========================= */
+
+        .bottom-links {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        .bottom-links a {
+            display: inline-block;
+            margin: 5px;
+            padding: 11px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            background: #f3d5e1;
+            color: #a8325d;
+            font-weight: 600;
+        }
+
+        .bottom-links a:hover {
+            background: #e9bfd0;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            background: #fff;
+            color: #666;
+        }
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .recommendations {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .ai-page {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .ai-header h1 {
+                font-size: 32px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .recommendations {
+                grid-template-columns: 1fr;
+            }
+
+            .bouquet-image {
+                height: 250px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a href="./index.html" class="logo">
+            Arnaverse
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="./index.html">
+                Home
+            </a>
+
+            <a href="./shop.html">
+                Shop
+            </a>
+
+            <a href="./customize.html">
+                Customize
+            </a>
+
+            <a href="./ai-recommendation.html" class="active">
+                AI Picks
+            </a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <a href="./cart.html" class="cart-button">
+                🛒 Cart
+            </a>
+
+            <a href="./login.html" class="login-button">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="ai-page">
+
+
+    <!-- HEADER -->
+
+    <section class="ai-header">
+
+        <div class="ai-icon">
+            🤖🌸
+        </div>
+
+        <h1>
+            AI Bouquet Recommendation
+        </h1>
+
+        <p>
+            Tell us your preferences and we'll suggest suitable bouquets.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         RECOMMENDATION FORM
+    ========================= -->
+
+    <section class="recommendation-box">
+
+        <h2>
+            ✨ Find Your Perfect Bouquet
+        </h2>
+
+
+        <div class="form-grid">
+
+
+            <!-- OCCASION -->
+
+            <div class="form-group">
+
+                <label for="occasion">
+                    Occasion
+                </label>
+
+                <select id="occasion">
+
+                    <option value="">
+                        Select Occasion
+                    </option>
+
+                    <option value="birthday">
+                        Birthday
+                    </option>
+
+                    <option value="anniversary">
+                        Anniversary
+                    </option>
+
+                    <option value="wedding">
+                        Wedding
+                    </option>
+
+                    <option value="love">
+                        Love / Romance
+                    </option>
+
+                    <option value="friendship">
+                        Friendship
+                    </option>
+
+                    <option value="congratulations">
+                        Congratulations
+                    </option>
+
+                    <option value="general">
+                        General / Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- BUDGET -->
+
+            <div class="form-group">
+
+                <label for="budget">
+                    Budget
+                </label>
+
+                <select id="budget">
+
+                    <option value="">
+                        Select Budget
+                    </option>
+
+                    <option value="500">
+                        Up to ₹500
+                    </option>
+
+                    <option value="700">
+                        Up to ₹700
+                    </option>
+
+                    <option value="1000">
+                        Up to ₹1000
+                    </option>
+
+                    <option value="1500">
+                        Up to ₹1500
+                    </option>
+
+                    <option value="any">
+                        Any Budget
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- FLOWER -->
+
+            <div class="form-group">
+
+                <label for="flower">
+                    Preferred Flower
+                </label>
+
+                <select id="flower">
+
+                    <option value="">
+                        Any Flower
+                    </option>
+
+                    <option value="rose">
+                        Rose
+                    </option>
+
+                    <option value="tulip">
+                        Tulip
+                    </option>
+
+                    <option value="sunflower">
+                        Sunflower
+                    </option>
+
+                    <option value="lily">
+                        Lily
+                    </option>
+
+                    <option value="mixed">
+                        Mixed Flowers
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- COLOR -->
+
+            <div class="form-group">
+
+                <label for="color">
+                    Preferred Color
+                </label>
+
+                <select id="color">
+
+                    <option value="">
+                        Any Color
+                    </option>
+
+                    <option value="red">
+                        Red
+                    </option>
+
+                    <option value="pink">
+                        Pink
+                    </option>
+
+                    <option value="yellow">
+                        Yellow
+                    </option>
+
+                    <option value="purple">
+                        Purple
+                    </option>
+
+                    <option value="white">
+                        White
+                    </option>
+
+                    <option value="mixed">
+                        Mixed Colors
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="recommend-btn"
+            id="recommendBtn">
+
+            🤖 Get My Recommendations
+
+        </button>
+
+    </section>
+
+
+    <!-- MESSAGE -->
+
+    <p id="recommendationMessage"></p>
+
+
+    <!-- =========================
+         RESULTS
+    ========================= -->
+
+    <section>
+
+        <h2 class="results-title">
+            🌸 Recommended Bouquets
+        </h2>
+
+        <div
+            id="recommendations"
+            class="recommendations">
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         BOTTOM LINKS
+    ========================= -->
+
+    <div class="bottom-links">
+
+        <a href="./index.html">
+            🏠 Home
+        </a>
+
+        <a href="./shop.html">
+            💐 Browse All Bouquets
+        </a>
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <p>
+        © 2026 Arnaverse | Smart Online Bouquet Ordering
+    </p>
+
+</footer>
+
+
+<script>
+
+/* ==========================================
+   BOUQUET DATA
+   REAL IMAGES FROM YOUR FOLDER
+========================================== */
+
+const bouquets = [
+
+    {
+        id: 1,
+
+        name: "Red Rose Bouquet",
+
+        price: 450,
+
+        flower: "rose",
+
+        color: "red",
+
+        image:
+            "./assets/images/bouquets/red-rose-bouquet.jpeg",
+
+        occasions: [
+            "birthday",
+            "anniversary",
+            "love",
+            "congratulations"
+        ]
+    },
+
+
+    {
+        id: 2,
+
+        name: "Pink Tulip Bouquet",
+
+        price: 550,
+
+        flower: "tulip",
+
+        color: "pink",
+
+        image:
+            "./assets/images/bouquets/pink-tulip-bouquet.jpeg",
+
+        occasions: [
+            "birthday",
+            "friendship",
+            "love",
+            "general"
+        ]
+    },
+
+
+    {
+        id: 3,
+
+        name: "Sunflower Bouquet",
+
+        price: 500,
+
+        flower: "sunflower",
+
+        color: "yellow",
+
+        /*
+           Tumhare folder mein
+           sunflower-bouquet.jpeg nahi hai.
+
+           Isliye hero-bouquet.jpeg
+           temporary sunflower image ke liye use ho rahi hai.
+        */
+
+        image:
+            "./assets/images/bouquets/hero-bouquet.jpeg",
+
+        occasions: [
+            "birthday",
+            "friendship",
+            "congratulations",
+            "general"
+        ]
+    },
+
+
+    {
+        id: 4,
+
+        name: "Purple Mixed Bouquet",
+
+        price: 650,
+
+        flower: "mixed",
+
+        color: "purple",
+
+        image:
+            "./assets/images/bouquets/purple-mixed-bouquet.jpeg",
+
+        occasions: [
+            "birthday",
+            "wedding",
+            "congratulations",
+            "general"
+        ]
+    },
+
+
+    {
+        id: 5,
+
+        name: "Purple Lily Bouquet",
+
+        price: 700,
+
+        flower: "lily",
+
+        color: "purple",
+
+        image:
+            "./assets/images/bouquets/purple-lily-bouquet.jpeg",
+
+        occasions: [
+            "anniversary",
+            "wedding",
+            "love",
+            "general"
+        ]
+    },
+
+
+    {
+        id: 6,
+
+        name: "Mixed Red & White Bouquet",
+
+        price: 750,
+
+        flower: "mixed",
+
+        color: "white",
+
+        image:
+            "./assets/images/bouquets/mixed-red-white-bouquet.jpeg",
+
+        occasions: [
+            "wedding",
+            "anniversary",
+            "congratulations"
+        ]
+    }
+
+];
+
+
+/* ==========================================
+   RECOMMENDATION BUTTON
+========================================== */
+
+document
+    .getElementById("recommendBtn")
+    .addEventListener("click", function() {
+
+
+        const occasion =
+            document.getElementById("occasion").value;
+
+
+        const budget =
+            document.getElementById("budget").value;
+
+
+        const flower =
+            document.getElementById("flower").value;
+
+
+        const color =
+            document.getElementById("color").value;
+
+
+        const message =
+            document.getElementById(
+                "recommendationMessage"
+            );
+
+
+        const results =
+            document.getElementById(
+                "recommendations"
+            );
+
+
+        /* =========================
+           CHECK INPUT
+        ========================= */
+
+        if (
+            !occasion &&
+            !budget &&
+            !flower &&
+            !color
+        ) {
+
+            message.textContent =
+                "⚠️ Please select at least one preference.";
+
+            message.style.color = "red";
+
+            results.innerHTML = "";
+
+            return;
+        }
+
+
+        /* =========================
+           FILTER
+        ========================= */
+
+        let filtered =
+            bouquets.filter(function(bouquet) {
+
+
+                let matches = true;
+
+
+                /* OCCASION */
+
+                if (occasion) {
+
+                    if (
+                        !bouquet.occasions.includes(
+                            occasion
+                        )
+                    ) {
+
+                        matches = false;
+
+                    }
+
+                }
+
+
+                /* BUDGET */
+
+                if (
+                    budget &&
+                    budget !== "any"
+                ) {
+
+                    if (
+                        bouquet.price >
+                        Number(budget)
+                    ) {
+
+                        matches = false;
+
+                    }
+
+                }
+
+
+                /* FLOWER */
+
+                if (flower) {
+
+                    if (
+                        bouquet.flower !== flower
+                    ) {
+
+                        matches = false;
+
+                    }
+
+                }
+
+
+                /* COLOR */
+
+                if (color) {
+
+                    if (
+                        bouquet.color !== color
+                    ) {
+
+                        matches = false;
+
+                    }
+
+                }
+
+
+                return matches;
+
+            });
+
+
+        /* =========================
+           NO EXACT MATCH
+        ========================= */
+
+        if (filtered.length === 0) {
+
+            message.textContent =
+                "💡 No exact match found. Here are some bouquets you may like.";
+
+            message.style.color =
+                "#a8325d";
+
+
+            filtered =
+                bouquets
+                .filter(function(bouquet) {
+
+                    if (
+                        budget &&
+                        budget !== "any" &&
+                        bouquet.price >
+                        Number(budget)
+                    ) {
+
+                        return false;
+
+                    }
+
+                    return true;
+
+                })
+                .slice(0, 3);
+
+        }
+
+        else {
+
+            message.textContent =
+                "✨ We found bouquets matching your preferences!";
+
+            message.style.color =
+                "#008000";
+
+        }
+
+
+        /* =========================
+           DISPLAY
+        ========================= */
+
+        results.innerHTML = "";
+
+
+        filtered.forEach(function(bouquet) {
+
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "bouquet-card";
+
+
+            card.innerHTML = `
+
+                <div class="bouquet-image">
+
+                    <img
+                        src="${bouquet.image}"
+                        alt="${bouquet.name}"
+                        onerror="
+                            this.onerror=null;
+                            this.src='./assets/images/bouquets/hero-bouquet.jpeg';
+                        "
+                    >
+
+                </div>
+
+
+                <h3>
+                    ${bouquet.name}
+                </h3>
+
+
+                <div class="bouquet-price">
+                    ₹${bouquet.price}
+                </div>
+
+
+                <div class="bouquet-details">
+
+                    <strong>
+                        Flower:
+                    </strong>
+
+                    ${bouquet.flower}
+
+                    <br>
+
+                    <strong>
+                        Color:
+                    </strong>
+
+                    ${bouquet.color}
+
+                    <br>
+
+                    <strong>
+                        Recommended for:
+                    </strong>
+
+                    ${bouquet.occasions.join(", ")}
+
+                </div>
+
+
+                <a
+                    href="./shop.html"
+                    class="select-bouquet-btn"
+                >
+                    View Bouquet
+                </a>
+
+            `;
+
+
+            results.appendChild(card);
+
+        });
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

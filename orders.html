@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Orders | Arnaverse</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    body {
+      margin: 0;
+      background: #fff8fb;
+      font-family: Arial, sans-serif;
+    }
+
+    .orders-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .orders-container h1 {
+      text-align: center;
+      color: #a8325d;
+      margin-bottom: 30px;
+    }
+
+    .order-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+    }
+
+    .order-id {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .order-date {
+      color: #777;
+      font-size: 14px;
+    }
+
+    .order-location {
+      margin-top: 12px;
+      color: #555;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .status-preparing {
+      background: #fff0c2;
+      color: #946200;
+    }
+
+    .status-placed {
+      background: #e8f1ff;
+      color: #2563eb;
+    }
+
+    .status-delivered {
+      background: #dff7e8;
+      color: #16803c;
+    }
+
+    .status-cancelled {
+      background: #ffe1e1;
+      color: #c62828;
+    }
+
+    .bouquet-title {
+      margin-top: 25px;
+      color: #a8325d;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .order-item-image {
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      background: #fff8fb;
+      flex-shrink: 0;
+    }
+
+    .item-info {
+      flex: 1;
+    }
+
+    .item-name {
+      font-weight: bold;
+      font-size: 17px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .item-quantity {
+      color: #777;
+      margin-bottom: 8px;
+    }
+
+    .item-price {
+      color: #a8325d;
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .order-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .payment {
+      color: #555;
+    }
+
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      color: #a8325d;
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .track-btn,
+    .cancel-btn {
+      padding: 11px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .track-btn {
+      background: #a8325d;
+      color: white;
+    }
+
+    .track-btn:hover {
+      background: #8d274d;
+    }
+
+    .cancel-btn {
+      background: #ffe5e5;
+      color: #c62828;
+    }
+
+    .cancel-btn:hover {
+      background: #ffd0d0;
+    }
+
+    .cancelled-text {
+      color: #c62828;
+      font-weight: bold;
+      padding: 11px 0;
+    }
+
+    .no-orders {
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .no-orders p {
+      color: #777;
+    }
+
+    .shop-btn {
+      display: inline-block;
+      margin-top: 15px;
+      background: #a8325d;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .orders-container {
+        padding: 12px;
+      }
+
+      .order-card {
+        padding: 18px;
+      }
+
+      .order-item {
+        gap: 12px;
+      }
+
+      .order-item-image {
+        width: 85px;
+        height: 85px;
+      }
+
+      .item-name {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="orders-container">
+
+    <h1>📦 My Orders</h1>
+
+    <div id="ordersContainer"></div>
+
+  </div>
+
+  <script>
+
+    /* =====================================================
+       BOUQUET IMAGE
+       ===================================================== */
+
+    function getBouquetImage(item) {
+
+      const name = (item.name || "")
+        .toLowerCase()
+        .trim();
+
+      if (
+        name.includes("mixed red & white") ||
+        name.includes("mixed red and white")
+      ) {
+        return "assets/images/bouquets/mixed-red-white-bouquet.jpeg";
+      }
+
+      if (name.includes("purple mixed")) {
+        return "assets/images/bouquets/purple-mixed-bouquet.jpeg";
+      }
+
+      if (name.includes("red rose bouquet")) {
+        return "assets/images/bouquets/red-rose-bouquet.jpeg";
+      }
+
+      if (name.includes("purple lily")) {
+        return "assets/images/bouquets/purple-lily-bouquet.jpeg";
+      }
+
+      if (name.includes("wedding")) {
+        return "assets/images/bouquets/wedding-bouquet.jpeg";
+      }
+
+      if (name.includes("pink tulip")) {
+        return "assets/images/bouquets/pink-tulip-bouquet.jpeg";
+      }
+
+      if (name.includes("twin rose")) {
+        return "assets/images/bouquets/red-twin-rose-bouquet.jpeg";
+      }
+
+      if (
+        name.includes("rose bouquet 2") ||
+        name.includes("special red rose")
+      ) {
+        return "assets/images/bouquets/red-rose-bouquet-2.jpeg";
+      }
+
+      if (item.image) {
+        return item.image;
+      }
+
+      if (item.img) {
+        return item.img;
+      }
+
+      if (item.imageUrl) {
+        return item.imageUrl;
+      }
+
+      return "assets/images/bouquets/hero-bouquet.jpeg";
+    }
+
+
+    /* =====================================================
+       DATE FORMAT - FIXED
+       ===================================================== */
+
+    function formatOrderDate(order) {
+
+  console.log("ORDER DATE DATA:", order);
+
+  const rawDate =
+    order.createdAt ||
+    order.orderDate ||
+    order.date ||
+    "";
+
+  if (!rawDate) {
+    return "Date not recorded";
+  }
+
+
+  /* =========================================
+     ISO DATE
+     Example:
+     2026-09-28T07:59:02.000Z
+     ========================================= */
+
+  if (
+    typeof rawDate === "string" &&
+    rawDate.includes("T")
+  ) {
+
+    const date = new Date(rawDate);
+
+    if (!isNaN(date.getTime())) {
+
+      return date.toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+    }
+
+  }
+
+
+  /* =========================================
+     INDIAN DATE FORMAT
+     Example:
+     28/9/2026, 7:59:02 am
+     ========================================= */
+
+  if (
+    typeof rawDate === "string" &&
+    rawDate.includes("/")
+  ) {
+
+    const parts = rawDate.split(",");
+
+    const datePart = parts[0].trim();
+    const timePart = parts[1]
+      ? parts[1].trim()
+      : "12:00:00 am";
+
+
+    const dateValues =
+      datePart.split("/");
+
+
+    if (dateValues.length === 3) {
+
+      const day =
+        parseInt(dateValues[0]);
+
+      const month =
+        parseInt(dateValues[1]) - 1;
+
+      const year =
+        parseInt(dateValues[2]);
+
+
+      /* TIME */
+
+      let hour = 0;
+      let minute = 0;
+      let second = 0;
+
+
+      const timeMatch =
+        timePart.match(
+          /(\d+):(\d+):(\d+)\s*(am|pm)/i
+        );
+
+
+      if (timeMatch) {
+
+        hour =
+          parseInt(timeMatch[1]);
+
+        minute =
+          parseInt(timeMatch[2]);
+
+        second =
+          parseInt(timeMatch[3]);
+
+
+        const ampm =
+          timeMatch[4].toLowerCase();
+
+
+        if (
+          ampm === "pm" &&
+          hour !== 12
+        ) {
+          hour += 12;
+        }
+
+
+        if (
+          ampm === "am" &&
+          hour === 12
+        ) {
+          hour = 0;
+        }
+
+      }
+
+
+      const date =
+        new Date(
+          year,
+          month,
+          day,
+          hour,
+          minute,
+          second
+        );
+
+
+      if (!isNaN(date.getTime())) {
+
+        return date.toLocaleString("en-IN", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+
+      }
+
+    }
+
+  }
+
+
+  /* =========================================
+     NORMAL DATE OBJECT / OTHER FORMAT
+     ========================================= */
+
+  const date =
+    new Date(rawDate);
+
+
+  if (!isNaN(date.getTime())) {
+
+    return date.toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+
+  }
+
+
+  return "Date not recorded";
+
+}
+    /* =====================================================
+       STATUS
+       ===================================================== */
+
+    function getStatusClass(status) {
+
+      const s = (status || "").toLowerCase();
+
+      if (s.includes("cancel")) {
+        return "status-cancelled";
+      }
+
+      if (s.includes("deliver")) {
+        return "status-delivered";
+      }
+
+      if (s.includes("prepar")) {
+        return "status-preparing";
+      }
+
+      return "status-placed";
+    }
+
+
+    /* =====================================================
+       PAYMENT
+       ===================================================== */
+
+    function getPaymentName(payment) {
+
+      if (!payment) {
+        return "Cash on Delivery";
+      }
+
+      if (payment.toUpperCase() === "COD") {
+        return "Cash on Delivery";
+      }
+
+      if (payment.toUpperCase() === "UPI") {
+        return "UPI Payment";
+      }
+
+      return payment;
+    }
+
+
+    /* =====================================================
+       CANCEL ORDER
+       ===================================================== */
+
+    function cancelOrder(orderId) {
+
+      let orders =
+        JSON.parse(
+          localStorage.getItem("arnaverseOrders")
+        ) || [];
+
+
+      orders = orders.map(order => {
+
+        if (order.orderId === orderId) {
+          order.status = "Cancelled";
+        }
+
+        return order;
+
+      });
+
+
+      localStorage.setItem(
+        "arnaverseOrders",
+        JSON.stringify(orders)
+      );
+
+
+      const latestOrder =
+        JSON.parse(
+          localStorage.getItem("arnaverseOrder")
+        );
+
+
+      if (
+        latestOrder &&
+        latestOrder.orderId === orderId
+      ) {
+
+        latestOrder.status = "Cancelled";
+
+        localStorage.setItem(
+          "arnaverseOrder",
+          JSON.stringify(latestOrder)
+        );
+
+      }
+
+
+      loadOrders();
+
+    }
+
+
+    /* =====================================================
+       LOAD ORDERS
+       ===================================================== */
+
+    function loadOrders() {
+
+      let orders =
+        JSON.parse(
+          localStorage.getItem("arnaverseOrders")
+        ) || [];
+
+
+      /*
+       OLD SINGLE ORDER SUPPORT
+       */
+
+      if (
+        orders.length === 0 &&
+        localStorage.getItem("arnaverseOrder")
+      ) {
+
+        const oldOrder =
+          JSON.parse(
+            localStorage.getItem("arnaverseOrder")
+          );
+
+        if (oldOrder) {
+          orders = [oldOrder];
+        }
+
+      }
+
+
+      const container =
+        document.getElementById(
+          "ordersContainer"
+        );
+
+
+      if (orders.length === 0) {
+
+        container.innerHTML = `
+
+          <div class="no-orders">
+
+            <h2>No Orders Yet 🌸</h2>
+
+            <p>
+              You haven't placed any orders yet.
+            </p>
+
+            <a
+              href="shop.html"
+              class="shop-btn"
+            >
+              🛍️ Shop Bouquets
+            </a>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      /*
+       NEWEST ORDER FIRST
+       */
+
+      orders = [...orders].reverse();
+
+
+      container.innerHTML =
+
+        orders.map(order => {
+
+          const status =
+            order.status ||
+            "Order Placed";
+
+
+          const statusClass =
+            getStatusClass(status);
+
+
+          const items =
+            Array.isArray(order.items)
+              ? order.items
+              : [];
+
+
+          const itemsHTML =
+
+            items.map(item => {
+
+              const itemName =
+                item.name ||
+                "Bouquet";
+
+
+              const image =
+                getBouquetImage(item);
+
+
+              const quantity =
+                Number(item.quantity) || 1;
+
+
+              const price =
+                Number(item.price) || 0;
+
+
+              return `
+
+                <div class="order-item">
+
+                  <img
+                    src="${image}"
+                    alt="${itemName}"
+                    class="order-item-image"
+                    onerror="
+                      this.onerror=null;
+                      this.src='assets/images/bouquets/hero-bouquet.jpeg';
+                    "
+                  >
+
+                  <div class="item-info">
+
+                    <div class="item-name">
+                      ${itemName}
+                    </div>
+
+                    <div class="item-quantity">
+                      Quantity: ${quantity}
+                    </div>
+
+                    <div class="item-price">
+                      ₹${price}
+                    </div>
+
+                  </div>
+
+                </div>
+
+              `;
+
+            }).join("");
+
+
+          const total =
+            Number(order.total) || 0;
+
+
+          const payment =
+            getPaymentName(
+              order.paymentMethod
+            );
+
+
+          const isCancelled =
+            status
+              .toLowerCase()
+              .includes("cancel");
+
+
+          return `
+
+            <div class="order-card">
+
+              <div class="order-header">
+
+                <div class="order-id">
+
+                  Order ID:
+                  ${order.orderId || "N/A"}
+
+                </div>
+
+                <div class="order-date">
+
+                  📅
+                  ${formatOrderDate(order)}
+
+                </div>
+
+              </div>
+
+
+              <div class="order-location">
+
+                📍
+                ${order.city || "N/A"}
+
+              </div>
+
+
+              <div>
+
+                <span
+                  class="status ${statusClass}"
+                >
+                  ${status}
+                </span>
+
+              </div>
+
+
+              <div class="bouquet-title">
+
+                🌸 Ordered Bouquets
+
+              </div>
+
+
+              ${itemsHTML}
+
+
+              <div class="order-bottom">
+
+                <div class="payment">
+
+                  💳 Payment:
+                  <strong>
+                    ${payment}
+                  </strong>
+
+                </div>
+
+
+                <div class="total">
+
+                  Total ₹${total}
+
+                </div>
+
+              </div>
+
+
+              <div class="order-actions">
+
+                <a
+                  href="order-tracking.html?orderId=${encodeURIComponent(
+                    order.orderId || ""
+                  )}"
+                  class="track-btn"
+                >
+                  📦 Track Order
+                </a>
+
+
+                ${
+                  isCancelled
+
+                  ? `
+
+                    <span class="cancelled-text">
+                      Order Cancelled
+                    </span>
+
+                  `
+
+                  : `
+
+                    <button
+                      class="cancel-btn"
+                      onclick="cancelOrder('${order.orderId}')"
+                    >
+                      ❌ Cancel Order
+                    </button>
+
+                  `
+                }
+
+              </div>
+
+            </div>
+
+          `;
+
+        }).join("");
+
+    }
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    loadOrders();
+
+  </script>
+
+</body>
+
+</html>
