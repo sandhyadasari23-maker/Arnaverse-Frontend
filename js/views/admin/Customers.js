@@ -72,9 +72,9 @@ export function init() {
                 }
             }
         } catch (err) {
-            console.error(err);
+            
             if (!cachedCustomers) {
-                container.innerHTML = `<p style="color:red">Error loading customers.</p>`;
+                container.innerHTML = `<p style="color:red">Cannot connect to server. Please make sure the backend server is running.</p>`;
             }
         }
     };

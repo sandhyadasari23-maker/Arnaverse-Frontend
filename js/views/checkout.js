@@ -231,8 +231,8 @@ export function init() {
             }
         })
         .catch(err => {
-            console.error(err);
-            msg.textContent = "Error placing order. Try again later.";
+            console.error("Network Error:", err);
+            msg.textContent = "Cannot connect to server. Please make sure the backend server is running.";
             msg.style.color = "#d9534f";
         });
     });

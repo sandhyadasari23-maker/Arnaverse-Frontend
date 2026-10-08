@@ -122,8 +122,8 @@ export function init() {
             }
         })
         .catch(err => {
-            showMessage("Server error. Please try again later.", "error");
-            console.error(err);
+            showMessage("Cannot connect to server. Please make sure the backend server is running.", "error");
+            
         });
     });
 }

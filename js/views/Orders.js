@@ -130,9 +130,9 @@ export function init() {
             })
             .catch(err => {
                 if (!cachedOrders) {
-                    container.innerHTML = `<div style="text-align:center; padding:40px; color:red;">Error loading orders.</div>`;
+                    container.innerHTML = `<div style="text-align:center; padding:40px; color:#d9534f;">Cannot connect to server. Please make sure the backend server is running.</div>`;
                 }
-                console.error(err);
+                
             });
     };
 
@@ -158,7 +158,7 @@ export function init() {
         })
         .catch(err => {
             alert("Error cancelling order.");
-            console.error(err);
+            
         });
     };
 

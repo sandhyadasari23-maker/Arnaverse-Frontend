@@ -102,9 +102,9 @@ export function init() {
             }
         })
         .catch(err => {
-            msg.textContent = "Error updating profile.";
+            msg.textContent = "Cannot connect to server. Please make sure the backend server is running.";
             msg.style.color = "red";
-            console.error(err);
+            
         });
     });
 

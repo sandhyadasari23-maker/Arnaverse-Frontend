@@ -152,9 +152,9 @@ export function init() {
             }
         })
         .catch(err => {
-            message.textContent = "Server error. Please try again later.";
+            message.textContent = "Cannot connect to server. Please make sure the backend server is running.";
             message.style.color = "#c62828";
-            console.error(err);
+            
         });
     };
 

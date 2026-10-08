@@ -394,10 +394,10 @@ export function init() {
                         .catch(err => {
 
 
-                            console.error(err);
+                            
 
 
-                            alert("Error updating order.");
+                            alert("Cannot connect to server. Please make sure the backend server is running.");
 
 
                             e.target.textContent = "Update Status";
@@ -473,13 +473,13 @@ export function init() {
             .catch(err => {
 
 
-                console.error(err);
+                
 
 
                 if (!cachedManageOrders) {
 
 
-                    container.innerHTML = `<div style="text-align: center; padding: 50px; color: red;">Error connecting to server.</div>`;
+                    container.innerHTML = `<div style="text-align: center; padding: 50px; color: red;">Cannot connect to server. Please make sure the backend server is running.</div>`;
 
 
                 }

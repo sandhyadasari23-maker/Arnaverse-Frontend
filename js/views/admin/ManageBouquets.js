@@ -394,7 +394,7 @@ export function init() {
 
                                 if(delData.success) loadBouquets();
 
-                                else alert("Failed to delete.");
+                                else alert("Cannot connect to server. Please make sure the backend server is running.");
 
                             })
 
@@ -410,9 +410,9 @@ export function init() {
 
             .catch(err => {
 
-                listContainer.innerHTML = `<div style="color:var(--danger); text-align:center;">Error loading bouquets.</div>`;
+                listContainer.innerHTML = `<div style="color:var(--danger); text-align:center;">Cannot connect to server. Please make sure the backend server is running.</div>`;
 
-                console.error(err);
+                
 
             });
 
@@ -502,11 +502,11 @@ export function init() {
 
         } catch (err) {
 
-            msg.textContent = "Server error.";
+            msg.textContent = "Cannot connect to server. Please make sure the backend server is running.";
 
             msg.style.color = "var(--danger)";
 
-            console.error(err);
+            
 
         }
 
@@ -612,11 +612,11 @@ export function init() {
 
         } catch (err) {
 
-            editMsg.textContent = "Server error.";
+            editMsg.textContent = "Cannot connect to server. Please make sure the backend server is running.";
 
             editMsg.style.color = "var(--danger)";
 
-            console.error(err);
+            
 
         }
 

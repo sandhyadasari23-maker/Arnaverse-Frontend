@@ -97,26 +97,26 @@ export const Utils = {
     }
 };
 
-import { renderNavbar, renderFooter, renderAdminSidebar } from './components/Layout.js?v=12';
+import { renderNavbar, renderFooter, renderAdminSidebar } from './components/Layout.js?v=37';
 
 const routes = {
-    '/': () => import('./views/Home.js?v=12'),
-    '/shop': () => import('./views/Shop.js?v=12'),
-    '/cart': () => import('./views/cart.js?v=27'),
-    '/checkout': () => import('./views/Checkout.js?v=16'),
-    '/customize': () => import('./views/Customize.js?v=12'),
-    '/ai-recommendation': () => import('./views/AIPicks.js?v=12'),
-    '/login': () => import('./views/Login.js?v=32'),
-    '/register': () => import('./views/Register.js?v=12'),
-    '/profile': () => import('./views/Profile.js?v=29'),
-    '/orders': () => import('./views/Orders.js?v=12'),
-    '/order-confirmation': () => import('./views/OrderConfirmation.js?v=12'),
-    '/order-tracking': () => import('./views/OrderTracking.js?v=18'),
-    '/admin-dashboard': () => import('./views/admin/Dashboard.js?v=14'),
-    '/admin-orders': () => import('./views/admin/ManageOrders.js?v=28'),
-    '/admin-bouquets': () => import('./views/admin/ManageBouquets.js?v=23'),
-    '/admin-inventory': () => import('./views/admin/Inventory.js?v=23'),
-    '/admin-customers': () => import('./views/admin/Customers.js?v=32')
+    '/': () => import('./views/Home.js?v=37'),
+    '/shop': () => import('./views/Shop.js?v=37'),
+    '/cart': () => import('./views/cart.js?v=37'),
+    '/checkout': () => import('./views/Checkout.js?v=37'),
+    '/customize': () => import('./views/Customize.js?v=37'),
+    '/ai-recommendation': () => import('./views/AIPicks.js?v=37'),
+    '/login': () => import('./views/Login.js?v=37'),
+    '/register': () => import('./views/Register.js?v=37'),
+    '/profile': () => import('./views/Profile.js?v=37'),
+    '/orders': () => import('./views/orders.js?v=37'),
+    '/order-confirmation': () => import('./views/OrderConfirmation.js?v=37'),
+    '/order-tracking': () => import('./views/OrderTracking.js?v=38'),
+    '/admin-dashboard': () => import('./views/admin/Dashboard.js?v=37'),
+    '/admin-orders': () => import('./views/admin/Manageorders.js?v=37'),
+    '/admin-bouquets': () => import('./views/admin/ManageBouquets.js?v=37'),
+    '/admin-inventory': () => import('./views/admin/Inventory.js?v=37'),
+    '/admin-customers': () => import('./views/admin/Customers.js?v=37')
 };
 
 const router = async () => {
@@ -192,7 +192,13 @@ fetch('http://127.0.0.1:5000/api/bouquets')
             }
         }
     })
-    .catch(err => console.log("Silent cloud sync failed:", err));
+    .catch(() => {});
+
+
+
+
+
+
 
 
 

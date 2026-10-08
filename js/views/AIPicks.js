@@ -171,8 +171,8 @@ export function init() {
                 `;
             }).join('');
         } catch (err) {
-            console.error(err);
-            msgEl.textContent = "Server error. Please check if the backend is running.";
+            
+            msgEl.textContent = "Cannot connect to server. Please make sure the backend server is running.";
             msgEl.style.color = "red";
         } finally {
             btn.textContent = "✨ Get AI Recommendations";

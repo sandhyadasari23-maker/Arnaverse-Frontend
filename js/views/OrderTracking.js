@@ -152,8 +152,8 @@ export function init(params) {
         })
         .catch(err => {
             if (!cachedOrders) {
-                container.innerHTML = `<div style="text-align:center; padding:50px; color:red;">Error loading tracking details.</div>`;
+                container.innerHTML = `<div style="text-align:center; padding:50px; color:red;">Cannot connect to server. Please make sure the backend server is running.</div>`;
             }
-            console.error(err);
+            
         });
 }

@@ -620,10 +620,10 @@ export function init() {
         .catch(err => {
 
 
-            console.error(err);
+            
 
 
-            if (!cachedOrders) tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px; color:#a8325d;">Server error connecting to backend.</td></tr>`;
+            if (!cachedOrders) tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px; color:#a8325d;">Cannot connect to server. Please make sure the backend server is running.</td></tr>`;
 
 
         });

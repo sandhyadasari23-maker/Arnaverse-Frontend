@@ -196,8 +196,8 @@ export function init() {
                     }
                 })
                 .catch(err => {
-                    console.error(err);
-                    alert("Error updating stock.");
+                    
+                    alert("Cannot connect to server. Please make sure the backend server is running.");
                     btnEl.innerHTML = originalHTML;
                     btnEl.style.opacity = '1';
                 });
@@ -236,10 +236,10 @@ export function init() {
                 }
             })
             .catch(err => {
-                console.error(err);
+                
                 if (!cachedInventory) {
                     const tBody = document.getElementById("inventoryTableBody");
-                    if (tBody) tBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:red;">Error connecting to server.</td></tr>`;
+                    if (tBody) tBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:red;">Cannot connect to server. Please make sure the backend server is running.</td></tr>`;
                 }
             });
     };
